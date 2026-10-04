@@ -195,6 +195,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             [&>p]:leading-relaxed [&>p]:text-[#243B38]
             [&>ul]:space-y-2 [&>ul]:list-disc [&>ul]:pl-5
             [&>ol]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-5
+            [&>table]:w-full [&>table]:border-collapse [&>table]:text-sm [&>table]:my-6 [&>table]:border [&>table]:border-[#174F4A]/15
+            [&>table_th]:bg-[#174F4A]/5 [&>table_th]:p-3 [&>table_th]:text-left [&>table_th]:font-bold [&>table_th]:text-[#174F4A] [&>table_th]:border-b [&>table_th]:border-[#174F4A]/15
+            [&>table_td]:p-3 [&>table_td]:border-b [&>table_td]:border-[#174F4A]/10
             [&>blockquote]:border-l-4 [&>blockquote]:border-[#2C7A73] [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-[#174F4A]"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
