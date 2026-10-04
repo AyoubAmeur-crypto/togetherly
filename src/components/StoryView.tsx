@@ -15,6 +15,8 @@ import {
 import HeroLottie from './HeroLottie';
 import FairSplitCalculator from './FairSplitCalculator';
 import CheckoutModal from './CheckoutModal';
+import WhatsAppHelpCTA from './WhatsAppHelpCTA';
+import FloatingWhatsAppCTA from './FloatingWhatsAppCTA';
 import { couplesMoneyPlanner, togetherlyBrand, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
 
 export default function StoryView() {
@@ -477,6 +479,25 @@ export default function StoryView() {
         </section>
 
         {/* ========================================================================= */}
+        {/* 8.5. WHATSAPP QUICK HELP CTA (Rounded Card)                                */}
+        {/* ========================================================================= */}
+        <section className="py-10 sm:py-14 bg-[#FAF6EF]">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <WhatsAppHelpCTA
+              topic="landing_story"
+              headline="Have a question about your couple's finances?"
+              subtext="Ask Togetherly directly on WhatsApp (0770566628). We're happy to answer questions about the planner, compatibility, or how to split fairly."
+              message="Hi Togetherly! I'm exploring your website and have a question about couples finances."
+              sourcePage="/"
+              contentCluster="Homepage Story"
+              ctaLocation="landing_story_middle"
+              buttonText="Ask on WhatsApp"
+              rounded={true}
+            />
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
         {/* 9. PROMINENT PRODUCT SHOWCASE TEASER (WITH TABLET IMAGE)                  */}
         {/* ========================================================================= */}
         <section id="buy" className="py-20 lg:py-28 bg-[#FAF6EF] overflow-hidden">
@@ -543,6 +564,13 @@ export default function StoryView() {
       </main>
 
       <CheckoutModal isOpen={checkoutOpen} onClose={() => setCheckoutOpen(false)} />
+
+      {/* Floating Rounded WhatsApp Button */}
+      <FloatingWhatsAppCTA
+        sourcePage="/"
+        topic="landing_story"
+        message="Hi Togetherly! I'm on your homepage and I have a question about the Couples Money Planner."
+      />
     </div>
   );
 }

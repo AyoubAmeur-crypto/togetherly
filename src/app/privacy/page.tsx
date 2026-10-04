@@ -98,7 +98,23 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-3 border-t border-[#174F4A]/10 pt-8">
-            <h2 className="text-xl font-bold text-[#174F4A]">4. Third-Party Services</h2>
+            <h2 className="text-xl font-bold text-[#174F4A]">4. Voluntary Email Notifications for New Free Tools</h2>
+            <p className="text-[#6F7F7C]">
+              If you voluntarily submit your email address through our notification forms (such as &ldquo;Notify me when new free tools launch&rdquo;), we collect your email address, submission timestamp, referring page, and campaign attribution parameters.
+            </p>
+            <p className="text-[#6F7F7C]">
+              <strong>Purpose:</strong> We use your email address solely to send occasional updates when Togetherly publishes new free tools, calculators, or educational resources.
+            </p>
+            <p className="text-[#6F7F7C]">
+              <strong>Scope of Consent:</strong> We do not sell, rent, or trade your email address. Consent provided for tool release notifications is strictly limited to product release updates and is never used for unrelated third-party marketing.
+            </p>
+            <p className="text-[#6F7F7C]">
+              <strong>Opting Out:</strong> You may unsubscribe at any time by clicking the unsubscribe link in any notification or by emailing <a href="mailto:support@gettogetherly.tech" className="text-[#2C7A73] hover:underline font-semibold">support@gettogetherly.tech</a>.
+            </p>
+          </section>
+
+          <section className="space-y-3 border-t border-[#174F4A]/10 pt-8">
+            <h2 className="text-xl font-bold text-[#174F4A]">5. Third-Party Services</h2>
             <p className="text-[#6F7F7C]">
               Our site and product operations rely on trusted third-party providers:
             </p>
@@ -109,14 +125,14 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-3 border-t border-[#174F4A]/10 pt-8">
-            <h2 className="text-xl font-bold text-[#174F4A]">5. Your Data Rights</h2>
+            <h2 className="text-xl font-bold text-[#174F4A]">6. Your Data Rights</h2>
             <p className="text-[#6F7F7C]">
               Because your financial calculations reside entirely within your own Google Drive, you retain full and complete control over your data. You may delete your spreadsheet, revoke partner sharing permissions, or export your numbers at any time directly through Google Drive without contacting Togetherly.
             </p>
           </section>
 
           <section className="space-y-3 border-t border-[#174F4A]/10 pt-8">
-            <h2 className="text-xl font-bold text-[#174F4A]">6. Contact Us</h2>
+            <h2 className="text-xl font-bold text-[#174F4A]">7. Contact Us</h2>
             <p className="text-[#6F7F7C]">
               If you have any questions about this Privacy Policy or our data protection architecture, please contact us at:
             </p>

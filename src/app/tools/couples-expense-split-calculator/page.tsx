@@ -12,6 +12,10 @@ import {
   BookOpen,
 } from 'lucide-react';
 import FairSplitCalculator from '@/components/FairSplitCalculator';
+import WhatsAppHelpCTA from '@/components/WhatsAppHelpCTA';
+import EmailCapture from '@/components/EmailCapture';
+import TrackedProductLink from '@/components/TrackedProductLink';
+
 
 export const metadata: Metadata = {
   title: 'Couples Expense Split Calculator (50/50 vs. Proportional)',
@@ -90,7 +94,7 @@ export default function CouplesExpenseSplitCalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }}
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#6F7F7C]">
           <Link href="/" className="hover:text-[#174F4A] transition-colors">
@@ -121,13 +125,11 @@ export default function CouplesExpenseSplitCalculatorPage() {
           </p>
         </header>
 
-        {/* Reused Interactive Calculator Engine (Zero math duplication) */}
-        <div className="bg-[#FFFFFF] p-4 sm:p-8 border border-[#174F4A]/10 shadow-sm">
-          <FairSplitCalculator hideHeading={true} />
-        </div>
+        {/* Interactive Calculator Engine (Single card, full width) */}
+        <FairSplitCalculator hideHeading={true} embedded={true} />
 
         {/* Educational Content Sections */}
-        <div className="space-y-12 max-w-3xl mx-auto pt-6 text-left">
+        <div className="space-y-12 max-w-6xl mx-auto pt-6 text-left">
           {/* Section 1: Overview of Splitting Approaches */}
           <section className="space-y-4">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#174F4A] tracking-tight">
@@ -245,7 +247,19 @@ export default function CouplesExpenseSplitCalculatorPage() {
             </div>
           </section>
 
-          {/* Section 5: Natural Commercial Product CTA */}
+          {/* Section 5: Contextual WhatsApp Help CTA */}
+          <WhatsAppHelpCTA
+            topic="couples_expense_split_calculator"
+            headline="Have a question about your result?"
+            subtext="Ask Togetherly — we're happy to help."
+            message="Hi Togetherly! I was using your Couples Expense Split Calculator and I have a question about our situation."
+            sourcePage="/tools/couples-expense-split-calculator"
+            contentCluster="Finance Tools / Calculators"
+            ctaLocation="calculator_middle"
+            buttonText="Ask on WhatsApp"
+          />
+
+          {/* Section 6: Natural Commercial Product CTA */}
           <section className="bg-[#174F4A] text-[#FAF6EF] p-8 sm:p-10 space-y-5 rounded-none relative overflow-hidden">
             <div
               className="absolute inset-0 w-full h-full pointer-events-none select-none mix-blend-overlay opacity-30"
@@ -270,13 +284,16 @@ export default function CouplesExpenseSplitCalculatorPage() {
               </p>
 
               <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <Link
+                <TrackedProductLink
                   href="/products/couples-money-planner"
+                  sourceType="calculator"
+                  sourcePage="/tools/couples-expense-split-calculator"
+                  ctaLocation="calculator_bottom"
                   className="inline-flex items-center justify-center gap-2 bg-[#FAF6EF] hover:bg-white text-[#174F4A] text-sm sm:text-base font-extrabold px-8 py-3.5 rounded-none transition-colors shadow-sm tracking-tight"
                 >
                   <span>Explore the Full 8-Sheet Planner ($19)</span>
                   <ArrowRight className="w-4 h-4 ml-0.5" />
-                </Link>
+                </TrackedProductLink>
               </div>
 
               <p className="text-[11px] text-[#FAF6EF]/70 pt-1">
@@ -284,6 +301,14 @@ export default function CouplesExpenseSplitCalculatorPage() {
               </p>
             </div>
           </section>
+
+          {/* Section 7: Email Notification Capture */}
+          <EmailCapture
+            sourcePage="/tools/couples-expense-split-calculator"
+            contentCluster="Finance Tools / Calculators"
+            ctaLocation="tool_bottom"
+          />
+
         </div>
       </div>
     </div>
