@@ -32,6 +32,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    other: {
+      'p:domain_verify': 'f4380dcbeb8829308632dc79720d8946',
+    },
   },
 };
 
