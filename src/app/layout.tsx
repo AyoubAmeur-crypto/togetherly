@@ -42,6 +42,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`h-full scroll-smooth ${plusJakartaSans.variable} ${manrope.variable}`}>
+      <head>
+        <link rel="icon" href="/togetherly/togetherly-icon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/togetherly/togetherly-icon.png" />
+      </head>
       <body className={`${plusJakartaSans.className} min-h-full flex flex-col bg-[#FAF6EF] text-[#243B38] antialiased selection:bg-[#F29B7F]/30 selection:text-[#174F4A]`}>
         <TogetherlyNav />
         <div className="flex-1">{children}</div>
