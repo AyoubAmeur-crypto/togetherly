@@ -26,6 +26,8 @@ import {
   ShieldAlert
 } from 'lucide-react';
 import FairSplitCalculator from './FairSplitCalculator';
+import WhatsAppHelpCTA from './WhatsAppHelpCTA';
+import FloatingWhatsAppCTA from './FloatingWhatsAppCTA';
 import {
   couplesMoneyPlanner,
   togetherlyBrand,
@@ -1266,6 +1268,21 @@ export default function CouplesMoneyPlannerView() {
                 );
               })}
             </div>
+
+            {/* Contextual WhatsApp Help CTA */}
+            <div className="pt-8 max-w-3xl mx-auto">
+              <WhatsAppHelpCTA
+                topic="product_faq"
+                headline="Still have a question before purchasing?"
+                subtext="Message Togetherly directly on WhatsApp (0770566628). We're happy to answer your questions about how the Google Sheets system works and whether it fits your couple's situation."
+                message="Hi Togetherly! I'm on the Couples Money Planner page and have a question before purchasing."
+                sourcePage="/products/couples-money-planner"
+                contentCluster="Product Support"
+                ctaLocation="product_faq"
+                buttonText="Ask on WhatsApp"
+                rounded={true}
+              />
+            </div>
           </div>
         </section>
 
@@ -1321,6 +1338,13 @@ export default function CouplesMoneyPlannerView() {
           </div>
         </section>
       </main>
+
+      {/* Floating Rounded WhatsApp Button */}
+      <FloatingWhatsAppCTA
+        sourcePage="/products/couples-money-planner"
+        topic="product_page"
+        message="Hi Togetherly! I'm looking at the Couples Money Planner and have a question."
+      />
     </div>
   );
 }

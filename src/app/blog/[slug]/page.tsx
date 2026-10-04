@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight, Calendar, Clock, User, ChevronRight, FileSpreadsheet, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calendar, Clock, User, ChevronRight, FileSpreadsheet } from 'lucide-react';
 import { getAllPosts, getPostBySlug, getRelatedPosts } from '@/content/blog';
+import ArticleTracker from '@/components/ArticleTracker';
+import WhatsAppHelpCTA from '@/components/WhatsAppHelpCTA';
+import EmailCapture from '@/components/EmailCapture';
+import TrackedProductLink from '@/components/TrackedProductLink';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -66,7 +70,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const relatedPosts = getRelatedPosts(post);
 
-  // Structured Data
+  // Structured Data (BlogPosting / Article)
   const blogPostingJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -128,9 +132,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     buttonUrl: '/products/couples-money-planner',
   };
 
+  const toolCta = post.toolCta;
+
   return (
     <article className="min-h-screen bg-[#FAF6EF] text-[#243B38] py-12 sm:py-20">
-      {/* Schemas */}
+      {/* Analytics Pageview Tracker */}
+      <ArticleTracker slug={post.slug} title={post.title} category={post.category} />
+
+      {/* JSON-LD Schemas */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
@@ -140,7 +149,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }}
       />
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Navigation Breadcrumb */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#6F7F7C]">
           <Link href="/" className="hover:text-[#174F4A] transition-colors">
@@ -202,30 +211,47 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
-        {/* Mid-Article or End-Article Contextual Tool Link */}
-        <div className="p-6 bg-[#FFFFFF] border border-[#174F4A]/15 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#2C7A73]">
-            Free Companion Tool
-          </span>
-          <h3 className="text-lg font-bold text-[#174F4A]">
-            Test your household numbers with our calculator
-          </h3>
-          <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
-            Curious what proportional splitting looks like with your actual salaries? Use our free, no-login Couples Expense Split Calculator.
-          </p>
-          <div className="pt-1">
-            <Link
-              href="/tools/couples-expense-split-calculator"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#174F4A] hover:text-[#2C7A73] transition-colors"
-            >
-              <span>Open Expense Split Calculator</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+        {/* 1. Contextual Companion Tool Box (when relevant) */}
+        {toolCta && toolCta.show !== false && (
+          <div className="p-6 sm:p-7 bg-[#FFFFFF] border border-[#174F4A]/15 space-y-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#2C7A73]">
+              Free Companion Tool
+            </span>
+            <h3 className="text-lg sm:text-xl font-bold text-[#174F4A]">
+              {toolCta.title || 'Test your household numbers with our calculator'}
+            </h3>
+            <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
+              {toolCta.description ||
+                'Curious what proportional splitting looks like with your actual salaries? Use our free, no-login Couples Expense Split Calculator.'}
+            </p>
+            <div className="pt-1">
+              <Link
+                href={toolCta.url || '/tools/couples-expense-split-calculator'}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#174F4A] hover:text-[#2C7A73] transition-colors"
+              >
+                <span>{toolCta.buttonText || 'Open Expense Split Calculator'}</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Contextual Product CTA Box */}
-        <div className="bg-[#174F4A] text-[#FAF6EF] p-8 sm:p-10 space-y-5 rounded-none relative overflow-hidden">
+        {/* 2. Contextual WhatsApp Help CTA */}
+        {post.whatsAppCta && (
+          <WhatsAppHelpCTA
+            topic={post.whatsAppCta.topic}
+            message={post.whatsAppCta.message}
+            headline={post.whatsAppCta.headline}
+            subtext={post.whatsAppCta.subtext}
+            buttonText={post.whatsAppCta.buttonText}
+            sourcePage={`/blog/${post.slug}`}
+            contentCluster={post.category}
+            ctaLocation="article_middle"
+          />
+        )}
+
+        {/* 3. Contextual Flagship Product CTA Box */}
+        <div className="bg-[#174F4A] text-[#FAF6EF] p-8 sm:p-12 space-y-5 rounded-none relative overflow-hidden">
           <div
             className="absolute inset-0 w-full h-full pointer-events-none select-none mix-blend-overlay opacity-30"
             style={{
@@ -234,44 +260,57 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               backgroundSize: '300px 225px',
             }}
           />
-          <div className="relative z-10 space-y-4">
+          <div className="relative z-10 space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#FAF6EF]/15 text-[11px] font-bold text-[#FAF6EF] uppercase tracking-wider">
               <FileSpreadsheet className="w-3.5 h-3.5 text-[#F29B7F]" />
               <span>Flagship System</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
               {cta.headline}
             </h2>
-            <p className="text-xs sm:text-sm text-[#FAF6EF]/85 leading-relaxed max-w-xl">
+            <p className="text-xs sm:text-sm text-[#FAF6EF]/85 leading-relaxed">
               {cta.description}
             </p>
             <div className="pt-2">
-              <Link
+              <TrackedProductLink
                 href={cta.buttonUrl || '/products/couples-money-planner'}
+                sourceType="article"
+                sourcePage={`/blog/${post.slug}`}
+                ctaLocation="article_bottom"
                 className="inline-flex items-center justify-center gap-2 bg-[#FAF6EF] hover:bg-white text-[#174F4A] text-sm sm:text-base font-extrabold px-8 py-3.5 rounded-none transition-colors shadow-sm tracking-tight"
               >
                 <span>{cta.buttonText}</span>
                 <ArrowRight className="w-4 h-4 ml-0.5" />
-              </Link>
+              </TrackedProductLink>
             </div>
           </div>
         </div>
 
-        {/* Related Articles (if available) */}
+        {/* 4. Reusable Email Capture Box */}
+        <EmailCapture
+          sourcePage={`/blog/${post.slug}`}
+          contentCluster={post.category}
+          ctaLocation="article_bottom"
+        />
+
+        {/* Related Articles (if available - 3 columns on large screens) */}
         {relatedPosts.length > 0 && (
           <section className="pt-8 border-t border-[#174F4A]/10 space-y-6">
-            <h2 className="text-xl font-extrabold text-[#174F4A]">Related Guides</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#174F4A]">Related Guides</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {relatedPosts.map((related) => (
                 <Link
                   key={related.slug}
                   href={`/blog/${related.slug}`}
-                  className="p-5 bg-[#FFFFFF] border border-[#174F4A]/10 hover:border-[#174F4A]/30 transition-all block space-y-2"
+                  className="p-6 bg-[#FFFFFF] border border-[#174F4A]/10 hover:border-[#174F4A]/30 transition-all block space-y-2.5 shadow-none"
                 >
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#2C7A73]">
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-wider text-[#2C7A73] truncate block max-w-full"
+                    title={related.category}
+                  >
                     {related.category}
                   </span>
-                  <h3 className="text-sm font-bold text-[#174F4A] leading-snug">
+                  <h3 className="text-sm sm:text-base font-bold text-[#174F4A] leading-snug">
                     {related.title}
                   </h3>
                   <span className="text-[11px] text-[#6F7F7C] block">{related.readingTime}</span>

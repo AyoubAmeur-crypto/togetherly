@@ -57,6 +57,27 @@ export const TOGETHERLY_CHECKOUT_URL =
 
 export const TOGETHERLY_GOOGLE_SHEET_COPY_URL = TOGETHERLY_CHECKOUT_URL;
 
+/**
+ * Togetherly WhatsApp Support & Questions configuration.
+ * Default number: 0770566628 (Algeria +213770566628)
+ */
+export const TOGETHERLY_WHATSAPP_NUMBER =
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '0770566628';
+
+/**
+ * Format any WhatsApp phone string into an accurate international wa.me URL
+ */
+export function formatWhatsAppUrl(phoneNumber: string, text: string = ''): string {
+  let clean = (phoneNumber || TOGETHERLY_WHATSAPP_NUMBER).replace(/[^0-9]/g, '');
+  // Normalize Algerian local 10-digit format (0770566628 -> 213770566628)
+  if (clean.startsWith('0') && clean.length === 10) {
+    clean = `213${clean.slice(1)}`;
+  }
+  const encodedText = encodeURIComponent(text);
+  return clean ? `https://wa.me/${clean}?text=${encodedText}` : `https://wa.me/?text=${encodedText}`;
+}
+
+
 export const couplesMoneyPlanner: TogetherlyProduct = {
   id: 'couples-money-planner',
   name: 'Togetherly — Couples Money Planner',

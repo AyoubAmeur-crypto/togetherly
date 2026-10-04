@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Lightbulb, AlertTriangle } from 'lucide-react';
+import { trackCalculatorUse } from '@/lib/analytics';
 
 export default function FairSplitCalculator({
   embedded = false,
@@ -14,6 +15,23 @@ export default function FairSplitCalculator({
   const [partnerBIncome, setPartnerBIncome] = useState(3200);
   const [sharedExpenses, setSharedExpenses] = useState(3200);
   const [splitMethod, setSplitMethod] = useState<'proportional' | 'fiftyFifty'>('proportional');
+
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const reportUsage = (method = splitMethod, action = 'adjust_inputs') => {
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+    debounceTimeout.current = setTimeout(() => {
+      trackCalculatorUse({ split_method: method, action });
+    }, 800);
+  };
+
+  const handleMethodChange = (method: 'proportional' | 'fiftyFifty') => {
+    setSplitMethod(method);
+    trackCalculatorUse({ split_method: method, action: 'toggle_method' });
+  };
+
 
   const totalIncome = Math.max(1, partnerAIncome + partnerBIncome);
   const ratioA = partnerAIncome / totalIncome;
@@ -28,22 +46,13 @@ export default function FairSplitCalculator({
   const discretionaryA = partnerAIncome - shareA;
   const discretionaryB = partnerBIncome - shareB;
 
-  const content = (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      {!hideHeading && (
-        <div className="text-center space-y-4 mb-10">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#174F4A] tracking-tight">
-            See how proportional fairness feels in real life.
-          </h2>
-          <p className="text-sm sm:text-base text-[#6F7F7C] max-w-2xl mx-auto">
-            Test your own numbers below. Compare how a rigid 50/50 split feels compared to Togetherly’s income-weighted proportional fair split.
-          </p>
-        </div>
-      )}
-
-      <div className="bg-[#FFFFFF] p-6 sm:p-10 rounded-none border border-[#174F4A]/10 shadow-none space-y-8">
-          {/* Sliders Input Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  const calculatorCard = (
+    <div
+      id="calculator"
+      className="bg-[#FFFFFF] p-6 sm:p-10 lg:p-12 rounded-none border border-[#174F4A]/10 shadow-sm space-y-8 w-full"
+    >
+      {/* Sliders Input Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-wider text-[#174F4A] block">
                 Partner A Net Income
@@ -53,7 +62,10 @@ export default function FairSplitCalculator({
                 <input
                   type="number"
                   value={partnerAIncome}
-                  onChange={(e) => setPartnerAIncome(Number(e.target.value) || 0)}
+                  onChange={(e) => {
+                    setPartnerAIncome(Number(e.target.value) || 0);
+                    reportUsage();
+                  }}
                   className="bg-transparent w-full focus:outline-none"
                   step={100}
                 />
@@ -64,7 +76,10 @@ export default function FairSplitCalculator({
                 max={12000}
                 step={100}
                 value={partnerAIncome}
-                onChange={(e) => setPartnerAIncome(Number(e.target.value))}
+                onChange={(e) => {
+                  setPartnerAIncome(Number(e.target.value));
+                  reportUsage();
+                }}
                 className="w-full accent-[#174F4A] cursor-pointer"
               />
             </div>
@@ -78,7 +93,10 @@ export default function FairSplitCalculator({
                 <input
                   type="number"
                   value={partnerBIncome}
-                  onChange={(e) => setPartnerBIncome(Number(e.target.value) || 0)}
+                  onChange={(e) => {
+                    setPartnerBIncome(Number(e.target.value) || 0);
+                    reportUsage();
+                  }}
                   className="bg-transparent w-full focus:outline-none"
                   step={100}
                 />
@@ -89,7 +107,10 @@ export default function FairSplitCalculator({
                 max={12000}
                 step={100}
                 value={partnerBIncome}
-                onChange={(e) => setPartnerBIncome(Number(e.target.value))}
+                onChange={(e) => {
+                  setPartnerBIncome(Number(e.target.value));
+                  reportUsage();
+                }}
                 className="w-full accent-[#174F4A] cursor-pointer"
               />
             </div>
@@ -103,7 +124,10 @@ export default function FairSplitCalculator({
                 <input
                   type="number"
                   value={sharedExpenses}
-                  onChange={(e) => setSharedExpenses(Number(e.target.value) || 0)}
+                  onChange={(e) => {
+                    setSharedExpenses(Number(e.target.value) || 0);
+                    reportUsage();
+                  }}
                   className="bg-transparent w-full focus:outline-none"
                   step={100}
                 />
@@ -114,7 +138,10 @@ export default function FairSplitCalculator({
                 max={8000}
                 step={100}
                 value={sharedExpenses}
-                onChange={(e) => setSharedExpenses(Number(e.target.value))}
+                onChange={(e) => {
+                  setSharedExpenses(Number(e.target.value));
+                  reportUsage();
+                }}
                 className="w-full accent-[#174F4A] cursor-pointer"
               />
             </div>
@@ -123,7 +150,7 @@ export default function FairSplitCalculator({
           {/* Split Mode Switcher */}
           <div className="flex items-center justify-center gap-3 pt-2">
             <button
-              onClick={() => setSplitMethod('proportional')}
+              onClick={() => handleMethodChange('proportional')}
               className={`px-5 py-2.5 rounded-none text-xs sm:text-sm font-bold transition-colors cursor-pointer ${
                 splitMethod === 'proportional'
                   ? 'bg-[#174F4A] text-[#FAF6EF]'
@@ -133,7 +160,7 @@ export default function FairSplitCalculator({
               Proportional to Income (Fair Split)
             </button>
             <button
-              onClick={() => setSplitMethod('fiftyFifty')}
+              onClick={() => handleMethodChange('fiftyFifty')}
               className={`px-5 py-2.5 rounded-none text-xs sm:text-sm font-bold transition-colors cursor-pointer ${
                 splitMethod === 'fiftyFifty'
                   ? 'bg-[#174F4A] text-[#FAF6EF]'
@@ -198,16 +225,45 @@ export default function FairSplitCalculator({
             )}
           </div>
         </div>
-      </div>
   );
 
+  if (embedded && hideHeading) {
+    return calculatorCard;
+  }
+
   if (embedded) {
-    return <div id="calculator" className="w-full">{content}</div>;
+    return (
+      <div className="w-full space-y-8">
+        {!hideHeading && (
+          <div className="text-center space-y-4 mb-10">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#174F4A] tracking-tight">
+              See how proportional fairness feels in real life.
+            </h2>
+            <p className="text-sm sm:text-base text-[#6F7F7C] max-w-2xl mx-auto">
+              Test your own numbers below. Compare how a rigid 50/50 split feels compared to Togetherly’s income-weighted proportional fair split.
+            </p>
+          </div>
+        )}
+        {calculatorCard}
+      </div>
+    );
   }
 
   return (
     <section id="calculator" className="py-20 sm:py-28 bg-[#FAF6EF] border-b border-[#174F4A]/10">
-      {content}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        {!hideHeading && (
+          <div className="text-center space-y-4 mb-10">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#174F4A] tracking-tight">
+              See how proportional fairness feels in real life.
+            </h2>
+            <p className="text-sm sm:text-base text-[#6F7F7C] max-w-2xl mx-auto">
+              Test your own numbers below. Compare how a rigid 50/50 split feels compared to Togetherly’s income-weighted proportional fair split.
+            </p>
+          </div>
+        )}
+        {calculatorCard}
+      </div>
     </section>
   );
 }

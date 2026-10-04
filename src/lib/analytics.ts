@@ -17,6 +17,48 @@ export interface CheckoutClickProperties {
   cta_location: 'hero' | 'middle' | 'final' | 'article' | 'tool' | 'nav' | 'footer' | string;
 }
 
+export interface ArticleViewProperties {
+  slug: string;
+  title: string;
+  category?: string;
+}
+
+export interface ArticleToProductClickProperties {
+  source_page: string;
+  cta_location: string;
+}
+
+export interface CalculatorUseProperties {
+  split_method?: string;
+  action?: string;
+}
+
+export interface CalculatorToProductClickProperties {
+  source_page: string;
+  cta_location: string;
+}
+
+export interface EmailFormViewProperties {
+  source_page: string;
+  content_cluster?: string;
+  cta_location?: string;
+}
+
+export interface EmailSignupProperties {
+  // CRITICAL: Strictly exclude email addresses and PII from analytics payloads
+  source_page: string;
+  content_cluster?: string;
+  cta_location?: string;
+}
+
+export interface WhatsAppClickProperties {
+  // CRITICAL: Strictly exclude message text and sensitive financial numbers from analytics payloads
+  page: string;
+  content_cluster?: string;
+  cta_location?: string;
+  topic?: string;
+}
+
 declare global {
   interface Window {
     dataLayer?: unknown[];
@@ -71,3 +113,53 @@ export function trackProductView(properties: ProductViewProperties): void {
 export function trackCheckoutClick(properties: CheckoutClickProperties): void {
   trackEvent('checkout_click', properties as unknown as Record<string, unknown>);
 }
+
+/**
+ * Track when a user views an educational blog article
+ */
+export function trackArticleView(properties: ArticleViewProperties): void {
+  trackEvent('article_view', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when a user clicks from a blog article to the commercial product page
+ */
+export function trackArticleToProductClick(properties: ArticleToProductClickProperties): void {
+  trackEvent('article_to_product_click', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when a user interacts with the expense split calculator
+ */
+export function trackCalculatorUse(properties: CalculatorUseProperties = {}): void {
+  trackEvent('calculator_use', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when a user clicks from the free calculator to the commercial product page
+ */
+export function trackCalculatorToProductClick(properties: CalculatorToProductClickProperties): void {
+  trackEvent('calculator_to_product_click', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when the email subscription form enters view
+ */
+export function trackEmailFormView(properties: EmailFormViewProperties): void {
+  trackEvent('email_form_view', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track successful email subscription (WITHOUT sending user's email address)
+ */
+export function trackEmailSignup(properties: EmailSignupProperties): void {
+  trackEvent('email_signup', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when a user clicks a contextual WhatsApp help CTA (WITHOUT sending message content)
+ */
+export function trackWhatsAppClick(properties: WhatsAppClickProperties): void {
+  trackEvent('whatsapp_click', properties as unknown as Record<string, unknown>);
+}
+
