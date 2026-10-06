@@ -16,6 +16,8 @@ export interface WhatsAppHelpCTAProps {
   buttonText?: string;
   className?: string;
   rounded?: boolean;
+  variant?: 'card' | 'section';
+  illustrationSrc?: string;
 }
 
 /**
@@ -41,11 +43,13 @@ export default function WhatsAppHelpCTA({
   sourcePage,
   contentCluster = 'Expense Splitting',
   ctaLocation = 'article_middle',
-  headline = 'Have a question about your situation?',
-  subtext = "Ask Togetherly a question — we're happy to share educational guidance and practical tips.",
-  buttonText = 'Ask on WhatsApp',
+  headline = 'Have questions or need help with anything?',
+  subtext = "Message Togetherly directly on WhatsApp (0770566628). We're here to answer questions, guide your setup, and help you build stress-free financial harmony.",
+  buttonText = 'Contact Support for Anything',
   className = '',
   rounded = true,
+  variant = 'card',
+  illustrationSrc = '/togetherly/illustration.png',
 }: WhatsAppHelpCTAProps) {
   const waUrl = formatWhatsAppUrl(TOGETHERLY_WHATSAPP_NUMBER, message);
 
@@ -57,6 +61,78 @@ export default function WhatsAppHelpCTA({
       topic,
     });
   };
+
+  // Full-width normal section with Content on Left and Illustration on Right (no over-rounded div)
+  if (variant === 'section') {
+    return (
+      <section
+        id="whatsapp-support"
+        aria-label="Togetherly WhatsApp Support"
+        className={`w-full py-16 sm:py-20 bg-[#FAF6EF] border-t border-b border-[#174F4A]/10 text-[#243B38] overflow-hidden ${className}`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Left Column: Content on Left */}
+            <div className="lg:col-span-7 xl:col-span-7 space-y-6 text-left order-1">
+              
+              <div className="space-y-3">
+                <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-extrabold text-[#174F4A] tracking-tight leading-[1.18]">
+                  {headline}
+                </h2>
+                <p className="text-sm sm:text-base text-[#6F7F7C] leading-relaxed max-w-xl">
+                  {subtext}
+                </p>
+              </div>
+
+              {/* Support trust indicators */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs text-[#243B38]">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2C7A73]" />
+                  <span className="font-semibold text-[#174F4A]">Real Human Support</span>
+                  <span className="text-[#6F7F7C]">· No bot scripts</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2C7A73]" />
+                  <span className="font-semibold text-[#174F4A]">Personal Assistance</span>
+                  <span className="text-[#6F7F7C]">· Questions &amp; setup</span>
+                </div>
+              </div>
+
+              {/* WhatsApp CTA with WhatsApp icon button */}
+              <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <a
+                  href={waUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleClick}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-[#174F4A] hover:bg-[#0F3834] text-[#FAF6EF] text-sm sm:text-base font-extrabold py-3.5 px-7 rounded-none transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shadow-md tracking-tight"
+                  aria-label={`${buttonText} - opens WhatsApp`}
+                >
+                  <WhatsAppIcon className="w-5 h-5 text-[#25D366] shrink-0" />
+                  <span>{buttonText}</span>
+                  <ArrowRight className="w-4 h-4 ml-1 text-[#FAF6EF]" />
+                </a>
+
+                
+              </div>
+            </div>
+
+            {/* Right Column: Customer Support Illustration on Right */}
+            <div className="lg:col-span-5 xl:col-span-5 order-2 flex items-center justify-center lg:justify-end">
+              <div className="relative w-full max-w-[380px] sm:max-w-[440px] lg:max-w-[480px]">
+                <img
+                  src={illustrationSrc}
+                  alt="Togetherly WhatsApp Customer Support"
+                  className="w-full h-auto object-contain select-none"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <div
