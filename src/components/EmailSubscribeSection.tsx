@@ -90,9 +90,21 @@ export default function EmailSubscribeSection({
     <section
       id="free-tools-planner"
       aria-label="Subscribe for free couples tools and starter planner"
-      className={`w-full pt-14 sm:pt-20 pb-0 bg-[#174F4A] border-t border-b border-[#2C7A73]/30 text-[#FAF6EF] overflow-hidden ${className}`}
+      className={`relative w-full pt-14 sm:pt-20 pb-0 bg-[#174F4A] border-t border-b border-[#2C7A73]/30 text-[#FAF6EF] overflow-hidden ${className}`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Flower / Indian Wedding App Pattern Background - Matches Planner CTA buy button section */}
+      <div
+        className="absolute inset-0 w-full h-full pointer-events-none select-none mix-blend-overlay opacity-80"
+        style={{
+          backgroundImage: 'url(/togetherly/indian-wedding-pattern.png)',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '300px 225px',
+        }}
+      />
+      {/* Subtle gradient vignette to ensure pristine contrast and maximum text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#174F4A]/50 via-[#174F4A]/20 to-[#174F4A]/60 pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-18 items-end">
           {/* Left Column (Desktop): Clean iPhone picture on the Left with fixed static lamp effect */}
           <div className="lg:col-span-6 xl:col-span-7 order-2 lg:order-1 relative flex items-end justify-center self-center">
