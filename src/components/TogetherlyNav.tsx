@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { togetherlyBrand, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
 import { trackCheckoutClick } from '@/lib/analytics';
+import EmailTopPopup from './EmailTopPopup';
 
 export default function TogetherlyNav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -53,6 +54,9 @@ export default function TogetherlyNav() {
 
   return (
     <>
+      {/* Top Center Floating Popup triggered in middle of story and product */}
+      <EmailTopPopup />
+
       <header className="fixed top-0 left-0 right-0 w-full z-[100] backdrop-blur-md bg-[#174F4A]/95 border-b border-[#2C7A73]/30 transition-all text-[#FAF6EF]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">

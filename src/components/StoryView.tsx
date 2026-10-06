@@ -17,6 +17,7 @@ import FairSplitCalculator from './FairSplitCalculator';
 import CheckoutModal from './CheckoutModal';
 import WhatsAppHelpCTA from './WhatsAppHelpCTA';
 import FloatingWhatsAppCTA from './FloatingWhatsAppCTA';
+import EmailSubscribeSection from './EmailSubscribeSection';
 import { couplesMoneyPlanner, togetherlyBrand, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
 
 export default function StoryView() {
@@ -479,37 +480,43 @@ export default function StoryView() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 8.5. WHATSAPP QUICK HELP CTA (Rounded Card)                                */}
+        {/* 8.5. WHATSAPP SUPPORT SECTION (Full Width, Content Left, Illustration Right) */}
         {/* ========================================================================= */}
-        <section className="py-10 sm:py-14 bg-[#FAF6EF]">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <WhatsAppHelpCTA
-              topic="landing_story"
-              headline="Have a question about your couple's finances?"
-              subtext="Ask Togetherly directly on WhatsApp (0770566628). We're happy to answer questions about the planner, compatibility, or how to split fairly."
-              message="Hi Togetherly! I'm exploring your website and have a question about couples finances."
-              sourcePage="/"
-              contentCluster="Homepage Story"
-              ctaLocation="landing_story_middle"
-              buttonText="Ask on WhatsApp"
-              rounded={true}
-            />
-          </div>
-        </section>
+        <WhatsAppHelpCTA
+          variant="section"
+          topic="landing_story"
+          headline="Have questions or need help with anything?"
+          subtext="Message Togetherly directly on WhatsApp (0770566628). Whether you have questions about how our couples planner works, need guidance on setup, or want advice on fair expense splitting—we're here to help."
+          message="Hi Togetherly! I'm on your website and would love support with couples finances."
+          sourcePage="/"
+          contentCluster="Homepage Story"
+          ctaLocation="landing_story_middle"
+          buttonText="Contact Support for Anything"
+          illustrationSrc="/togetherly/illustration.png"
+        />
+
+        {/* ========================================================================= */}
+        {/* 8.8. SUBSCRIBE FOR FREE TOOLS & STARTER PLANNER (iPhone Section)           */}
+        {/* ========================================================================= */}
+        <EmailSubscribeSection
+          sourcePage="/"
+          contentCluster="Brand Story"
+          ctaLocation="story_iphone_subscribe_section"
+        />
 
         {/* ========================================================================= */}
         {/* 9. PROMINENT PRODUCT SHOWCASE TEASER (WITH TABLET IMAGE)                  */}
         {/* ========================================================================= */}
-        <section id="buy" className="py-20 lg:py-28 bg-[#FAF6EF] overflow-hidden">
+        <section id="buy" className="py-20 lg:py-8 bg-[#FAF6EF] overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12">
               {/* Tablet Mockup Image */}
-              <div className="w-full lg:w-[52%] order-1 lg:order-2 flex items-center justify-center lg:justify-end">
+              <div className="w-full lg:w-[62%] order-1 lg:order-2 flex items-center justify-center lg:justify-end">
                 <Link href="/products/couples-money-planner" className="group block cursor-pointer">
                   <img
                     src="/togetherly/tablet.png"
                     alt="Togetherly Couples Money Planner on Tablet"
-                    className="w-full max-w-lg lg:max-w-none h-auto object-contain select-none drop-shadow-2xl transition-transform duration-300 group-hover:scale-[1.015]"
+                    className="w-full max-w-4xl lg:w-[800px] h-auto object-contain select-none drop-shadow-2xl transition-transform duration-300 "
                   />
                 </Link>
               </div>

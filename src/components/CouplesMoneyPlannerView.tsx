@@ -28,6 +28,7 @@ import {
 import FairSplitCalculator from './FairSplitCalculator';
 import WhatsAppHelpCTA from './WhatsAppHelpCTA';
 import FloatingWhatsAppCTA from './FloatingWhatsAppCTA';
+import EmailSubscribeSection from './EmailSubscribeSection';
 import {
   couplesMoneyPlanner,
   togetherlyBrand,
@@ -1269,25 +1270,11 @@ export default function CouplesMoneyPlannerView() {
               })}
             </div>
 
-            {/* Contextual WhatsApp Help CTA */}
-            <div className="pt-8 max-w-3xl mx-auto">
-              <WhatsAppHelpCTA
-                topic="product_faq"
-                headline="Still have a question before purchasing?"
-                subtext="Message Togetherly directly on WhatsApp (0770566628). We're happy to answer your questions about how the Google Sheets system works and whether it fits your couple's situation."
-                message="Hi Togetherly! I'm on the Couples Money Planner page and have a question before purchasing."
-                sourcePage="/products/couples-money-planner"
-                contentCluster="Product Support"
-                ctaLocation="product_faq"
-                buttonText="Ask on WhatsApp"
-                rounded={true}
-              />
-            </div>
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* 14. FINAL CTA                                                             */}
+        {/* 13.5. FINAL CTA TO GET THE PLANNER                                        */}
         {/* ========================================================================= */}
         <section className="relative py-24 sm:py-28 bg-[#174F4A] text-[#FAF6EF] w-full border-t border-[#2C7A73]/30 overflow-hidden">
           <div
@@ -1337,6 +1324,31 @@ export default function CouplesMoneyPlannerView() {
             </p>
           </div>
         </section>
+
+        {/* ========================================================================= */}
+        {/* 14. WHATSAPP SUPPORT SECTION (Full Width, Content Left, Illustration Right) */}
+        {/* ========================================================================= */}
+        <WhatsAppHelpCTA
+          variant="section"
+          topic="product_support"
+          headline="Have questions or need help with anything?"
+          subtext="Message Togetherly directly on WhatsApp (0770566628). We're happy to answer questions about the Couples Money Planner, guide your setup, or help you decide if it's the right fit for your situation."
+          message="Hi Togetherly! I'm on the Couples Money Planner page and have a question."
+          sourcePage="/products/couples-money-planner"
+          contentCluster="Product Support"
+          ctaLocation="product_whatsapp_section"
+          buttonText="Contact Support for Anything"
+          illustrationSrc="/togetherly/illustration.png"
+        />
+
+        {/* ========================================================================= */}
+        {/* 14.5. SUBSCRIBE FOR FREE TOOLS & STARTER PLANNER (iPhone Section)         */}
+        {/* ========================================================================= */}
+        <EmailSubscribeSection
+          sourcePage="/products/couples-money-planner"
+          contentCluster="Product Showcase"
+          ctaLocation="product_iphone_subscribe_section"
+        />
       </main>
 
       {/* Floating Rounded WhatsApp Button */}
