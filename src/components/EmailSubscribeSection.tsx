@@ -128,10 +128,10 @@ export default function EmailSubscribeSection({
             {/* Headline & Body Copy */}
             <div className="space-y-3">
               <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-extrabold text-white tracking-tight leading-[1.18]">
-                Get our free couples tools <span className="text-[#91B7A0]">&amp; starter product planner.</span>
+                More free tools for couples <span className="text-[#91B7A0]">are coming</span>
               </h2>
               <p className="text-sm sm:text-base text-[#FAF6EF]/85 leading-relaxed max-w-xl">
-                Managing money as a couple shouldn&apos;t come with tension or awkward math. Subscribe to our newsletter to receive our free starter Google Sheets budgeting template, calculator tools, and exclusive subscriber discounts—delivered straight to your inbox.
+                We&apos;re building simple calculators and tools to help couples manage money together — without complicated spreadsheets.
               </p>
             </div>
 
@@ -144,13 +144,13 @@ export default function EmailSubscribeSection({
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="font-extrabold text-base text-white">You&apos;re subscribed!</h4>
+                      <h4 className="font-extrabold text-base text-white">You&apos;re on the list!</h4>
                       <span className="text-[10px] font-bold uppercase tracking-wider bg-[#2C7A73]/40 text-[#FAF6EF] px-2 py-0.5 border border-[#FAF6EF]/20">
-                        Delivered
+                        Confirmed
                       </span>
                     </div>
                     <p className="text-xs sm:text-sm text-[#FAF6EF]/80 leading-relaxed">
-                      We&apos;ve sent your free couples financial planner copy and toolkit to your inbox. You&apos;ll also receive our newsletter, new tools, and exclusive discounts.
+                      We&apos;ll notify you as soon as the next free tool or calculator is ready.
                     </p>
                   </div>
                 </div>
@@ -187,7 +187,7 @@ export default function EmailSubscribeSection({
                         </>
                       ) : (
                         <>
-                          <span>Subscribe to Get Newsletter, Discounts &amp; Free Tools</span>
+                          <span>Get the next free tool</span>
                           <Send className="w-3.5 h-3.5 text-[#F29B7F]" />
                         </>
                       )}
@@ -203,7 +203,7 @@ export default function EmailSubscribeSection({
 
                   <div className="flex items-center gap-2 text-[11px] text-[#FAF6EF]/75 pt-1">
                     <ShieldCheck className="w-3.5 h-3.5 text-[#91B7A0] shrink-0" />
-                    <span>Private &amp; secure. No spam. One-click unsubscribe anytime.</span>
+                    <span>We’ll only email you when a new free calculator, tool, or useful guide launches. Unsubscribe anytime.</span>
                   </div>
                 </form>
               )}
