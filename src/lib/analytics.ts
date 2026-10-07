@@ -59,6 +59,52 @@ export interface WhatsAppClickProperties {
   topic?: string;
 }
 
+export interface PopupViewProperties {
+  page_url: string;
+  utm_source?: string;
+  utm_campaign?: string;
+  utm_content?: string;
+  device?: string;
+  trigger?: string;
+  variant?: string;
+}
+
+export interface PopupCloseProperties {
+  page_url: string;
+  utm_source?: string;
+  device?: string;
+  time_spent_seconds?: number;
+}
+
+export interface PopupEmailStartedProperties {
+  page_url: string;
+  device?: string;
+}
+
+export interface PopupSubmitProperties {
+  page_url: string;
+  utm_source?: string;
+  utm_campaign?: string;
+  device?: string;
+  variant?: string;
+}
+
+export interface PopupConversionProperties {
+  page_url: string;
+  utm_source?: string;
+  utm_campaign?: string;
+  utm_content?: string;
+  device?: string;
+  lead_magnet: string;
+  variant?: string;
+}
+
+export interface StarterKitOpenedProperties {
+  page_url: string;
+  device?: string;
+  lead_magnet: string;
+}
+
 declare global {
   interface Window {
     dataLayer?: unknown[];
@@ -162,4 +208,47 @@ export function trackEmailSignup(properties: EmailSignupProperties): void {
 export function trackWhatsAppClick(properties: WhatsAppClickProperties): void {
   trackEvent('whatsapp_click', properties as unknown as Record<string, unknown>);
 }
+
+/**
+ * Track when the email capture popup enters view
+ */
+export function trackPopupView(properties: PopupViewProperties): void {
+  trackEvent('popup_view', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when the email capture popup is closed/dismissed
+ */
+export function trackPopupClose(properties: PopupCloseProperties): void {
+  trackEvent('popup_close', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when the visitor starts typing in the popup email field
+ */
+export function trackPopupEmailStarted(properties: PopupEmailStartedProperties): void {
+  trackEvent('popup_email_started', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when the popup form is submitted
+ */
+export function trackPopupSubmit(properties: PopupSubmitProperties): void {
+  trackEvent('popup_submit', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when the popup form successfully converts
+ */
+export function trackPopupConversion(properties: PopupConversionProperties): void {
+  trackEvent('popup_conversion', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when the user opens the starter kit from the success state
+ */
+export function trackStarterKitOpened(properties: StarterKitOpenedProperties): void {
+  trackEvent('starter_kit_opened', properties as unknown as Record<string, unknown>);
+}
+
 

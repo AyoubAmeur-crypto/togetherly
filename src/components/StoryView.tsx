@@ -18,6 +18,7 @@ import CheckoutModal from './CheckoutModal';
 import WhatsAppHelpCTA from './WhatsAppHelpCTA';
 import FloatingWhatsAppCTA from './FloatingWhatsAppCTA';
 import EmailSubscribeSection from './EmailSubscribeSection';
+import TestimonialSection from './TestimonialSection';
 import { couplesMoneyPlanner, togetherlyBrand, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
 
 export default function StoryView() {
@@ -334,6 +335,11 @@ export default function StoryView() {
             </div>
           </div>
         </section>
+
+        {/* ========================================================================= */}
+        {/* REAL USER TESTIMONIAL (AYOUB AMEUR)                                       */}
+        {/* ========================================================================= */}
+        <TestimonialSection bgVariant="cream" id="story-testimonial" />
 
         {/* ========================================================================= */}
         {/* 6. HEARTFELT COUPLE MESSAGE (WITH FIGMA COUPLE ILLUSTRATION)              */}

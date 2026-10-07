@@ -60,6 +60,32 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   };
 }
 
+/**
+ * Wraps all <table> elements in a responsive horizontal scroll container.
+ * If the table width exceeds the screen width, it allows smooth horizontal scrolling
+ * without causing the whole page to stretch or wobble horizontally.
+ */
+function makeTablesScrollable(html: string): string {
+  if (!html) return '';
+
+  return html.replace(
+    /(<table[\s\S]*?<\/table>)/gi,
+    `<div class="blog-table-container my-6 w-full max-w-full">
+      <div class="sm:hidden flex items-center justify-between text-[11px] text-[#6F7F7C] font-medium mb-1.5 px-0.5 select-none" aria-hidden="true">
+        <span class="inline-flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-[#2C7A73]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+          </svg>
+          <span>Scroll horizontally to view table</span>
+        </span>
+      </div>
+      <div class="blog-table-scroll-wrapper overflow-x-auto w-full max-w-full border border-[#174F4A]/15 bg-[#FFFFFF] shadow-2xs rounded-none">
+        $1
+      </div>
+    </div>`
+  );
+}
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
@@ -133,9 +159,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   };
 
   const toolCta = post.toolCta;
+  const formattedContent = makeTablesScrollable(post.content);
 
   return (
-    <article className="min-h-screen bg-[#FAF6EF] text-[#243B38] py-12 sm:py-20">
+    <article className="min-h-screen bg-[#FAF6EF] text-[#243B38] py-12 sm:py-20 overflow-x-hidden">
       {/* Analytics Pageview Tracker */}
       <ArticleTracker slug={post.slug} title={post.title} category={post.category} />
 
@@ -204,11 +231,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             [&>p]:leading-relaxed [&>p]:text-[#243B38]
             [&>ul]:space-y-2 [&>ul]:list-disc [&>ul]:pl-5
             [&>ol]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-5
-            [&>table]:w-full [&>table]:border-collapse [&>table]:text-sm [&>table]:my-6 [&>table]:border [&>table]:border-[#174F4A]/15
-            [&>table_th]:bg-[#174F4A]/5 [&>table_th]:p-3 [&>table_th]:text-left [&>table_th]:font-bold [&>table_th]:text-[#174F4A] [&>table_th]:border-b [&>table_th]:border-[#174F4A]/15
-            [&>table_td]:p-3 [&>table_td]:border-b [&>table_td]:border-[#174F4A]/10
+            [&_table]:w-full [&_table]:min-w-[560px] [&_table]:border-collapse [&_table]:text-xs sm:[&_table]:text-sm
+            [&_th]:bg-[#174F4A]/5 [&_th]:p-3 sm:[&_th]:p-3.5 [&_th]:text-left [&_th]:font-bold [&_th]:text-[#174F4A] [&_th]:border-b [&_th]:border-[#174F4A]/15 [&_th]:whitespace-nowrap
+            [&_td]:p-3 sm:[&_td]:p-3.5 [&_td]:border-b [&_td]:border-[#174F4A]/10 [&_td]:align-top [&_td]:text-[#243B38]
+            [&_tr:last-child_td]:border-b-0
+            [&_tbody_tr:hover]:bg-[#FAF6EF]/50
             [&>blockquote]:border-l-4 [&>blockquote]:border-[#2C7A73] [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-[#174F4A]"
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          dangerouslySetInnerHTML={{ __html: formattedContent }}
         />
 
         {/* 1. Contextual Companion Tool Box (when relevant) */}

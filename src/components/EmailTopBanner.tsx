@@ -147,11 +147,11 @@ export default function EmailTopBanner({ onVisibilityChange }: EmailTopBannerPro
           <div className="flex items-center gap-2 text-center md:text-left shrink-0">
             <span className="inline-flex items-center gap-1 bg-[#F29B7F]/20 text-[#F29B7F] px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider">
               <Sparkles className="w-3 h-3 text-[#F29B7F]" />
-              <span>Free Gift</span>
+              <span>Free Tools</span>
             </span>
 
             <p className="text-xs sm:text-[13px] text-[#FAF6EF] font-medium leading-tight">
-              Get our free couples finance tools &amp; starter planner:
+              More free tools for couples are coming — get the next free tool:
             </p>
           </div>
 
@@ -160,7 +160,7 @@ export default function EmailTopBanner({ onVisibilityChange }: EmailTopBannerPro
             {status === 'success' ? (
               <div className="flex items-center gap-2 text-xs font-semibold text-[#81C784] bg-[#2C7A73]/25 px-3 py-1.5 border border-[#81C784]/30">
                 <CheckCircle2 className="w-4 h-4 text-[#81C784] shrink-0" />
-                <span>You&apos;re in! Check your inbox for your free planner &amp; tools.</span>
+                <span>You&apos;re on the list! We&apos;ll notify you when the next free tool launches.</span>
               </div>
             ) : (
               <form
@@ -194,7 +194,7 @@ export default function EmailTopBanner({ onVisibilityChange }: EmailTopBannerPro
                     <Loader2 className="w-3.5 h-3.5 animate-spin text-[#174F4A]" />
                   ) : (
                     <>
-                      <span>Get Free</span>
+                      <span>Get Next Tool</span>
                       <ArrowRight className="w-3 h-3 text-[#174F4A]" />
                     </>
                   )}

@@ -18,9 +18,9 @@ export default function EmailCapture({
   sourcePage = '',
   contentCluster = 'Expense Splitting',
   ctaLocation = 'article_bottom',
-  headline = 'More free tools for couples are coming.',
-  subheadline = "We're building simple tools to make money easier to manage together. Get notified when the next one launches.",
-  buttonText = 'Notify me',
+  headline = 'More free tools for couples are coming',
+  subheadline = "We're building simple calculators and tools to help couples manage money together — without complicated spreadsheets.",
+  buttonText = 'Get the next free tool',
   className = '',
 }: EmailCaptureProps) {
   const [email, setEmail] = useState('');
@@ -182,7 +182,7 @@ export default function EmailCapture({
           )}
 
           <p className="text-[11px] text-[#6F7F7C]/75">
-            We only send occasional notes when new free calculators and guides launch. Unsubscribe at any time.
+            We’ll only email you when a new free calculator, tool, or useful guide launches. Unsubscribe anytime.
           </p>
         </form>
       )}
