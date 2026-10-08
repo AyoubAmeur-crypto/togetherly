@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { X, Mail, Check, ArrowRight, Loader2, Sparkles, Lock } from 'lucide-react';
+import { X, Mail, Check, Loader2, Sparkles, Lock } from 'lucide-react';
 import {
   trackPopupView,
   trackPopupClose,
@@ -143,7 +144,7 @@ export default function EmailTopPopup() {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const previousFocusedElementRef = useRef<HTMLElement | null>(null);
   const modalOpenedAtRef = useRef<number>(0);
-  const pageLoadTimeRef = useRef<number>(Date.now());
+  const pageLoadTimeRef = useRef<number>(0);
   const hasStartedTypingRef = useRef(false);
   const isTriggeredRef = useRef(false);
 
@@ -231,11 +232,15 @@ export default function EmailTopPopup() {
   // Trigger listeners: timer, 50% scroll depth, desktop exit-intent
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    pageLoadTimeRef.current = Date.now();
+    if (!pageLoadTimeRef.current) {
+      pageLoadTimeRef.current = Date.now();
+    }
 
     if (isExcludedPath) {
-      setIsOpen(false);
-      return;
+      const closeTimer = setTimeout(() => {
+        setIsOpen((prev) => (prev ? false : prev));
+      }, 0);
+      return () => clearTimeout(closeTimer);
     }
 
     const urlForcesPopup =
@@ -302,6 +307,32 @@ export default function EmailTopPopup() {
     };
   }, [pathname, isExcludedPath, isLocalDev, triggerModal]);
 
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+
+    // Store dismissal time in localStorage (7 days cooldown)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(DISMISSED_AT_KEY, Date.now().toString());
+    }
+
+    const timeSpent = modalOpenedAtRef.current
+      ? Math.max(1, Math.round((Date.now() - modalOpenedAtRef.current) / 1000))
+      : 0;
+
+    const attribution = getInitialAttribution();
+    trackPopupClose({
+      page_url: typeof window !== 'undefined' ? window.location.href : '',
+      utm_source: attribution.utm_source,
+      device: getDeviceType(),
+      time_spent_seconds: timeSpent,
+    });
+
+    // Return focus to previous element for accessibility
+    setTimeout(() => {
+      previousFocusedElementRef.current?.focus?.();
+    }, 50);
+  }, []);
+
   // Accessibility: Focus trap & Escape key listener
   useEffect(() => {
     if (!isOpen) return;
@@ -346,34 +377,7 @@ export default function EmailTopPopup() {
       clearTimeout(focusTimer);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen]);
-
-  const handleClose = () => {
-    if (!isOpen) return;
-    setIsOpen(false);
-
-    // Store dismissal time in localStorage (7 days cooldown)
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(DISMISSED_AT_KEY, Date.now().toString());
-    }
-
-    const timeSpent = modalOpenedAtRef.current
-      ? Math.max(1, Math.round((Date.now() - modalOpenedAtRef.current) / 1000))
-      : 0;
-
-    const attribution = getInitialAttribution();
-    trackPopupClose({
-      page_url: typeof window !== 'undefined' ? window.location.href : '',
-      utm_source: attribution.utm_source,
-      device: getDeviceType(),
-      time_spent_seconds: timeSpent,
-    });
-
-    // Return focus to previous element for accessibility
-    setTimeout(() => {
-      previousFocusedElementRef.current?.focus?.();
-    }, 50);
-  };
+  }, [isOpen, handleClose]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -435,7 +439,7 @@ export default function EmailTopPopup() {
         }),
       });
 
-      const data = await response.json();
+      await response.json();
 
       if (!response.ok) {
         setStatus('error');
@@ -513,7 +517,7 @@ export default function EmailTopPopup() {
           <div className="md:col-span-7 p-5 sm:p-7 lg:p-9 space-y-4 text-left relative z-10">
             {/* Logo + Small Badge */}
             <div className="flex items-center gap-2.5 pr-8 sm:pr-0">
-              <img
+              <Image
                 src="/togetherly/togetherly-logo-primary.png"
                 alt="Togetherly"
                 className="h-6 sm:h-7 w-auto object-contain"
@@ -652,7 +656,7 @@ export default function EmailTopPopup() {
             {/* Mobile-only dashboard preview (compact, avoids scrolling blowouts) */}
             <div className="block md:hidden pt-2 -mb-1">
               <div className="relative w-full max-w-[210px] mx-auto flex items-center justify-center pointer-events-none">
-                <img
+                <Image
                   src="/togetherly/mac.png"
                   alt="Togetherly Couples Money Planner on MacBook"
                   className="w-full h-auto object-contain select-none drop-shadow-md"
@@ -667,7 +671,7 @@ export default function EmailTopPopup() {
           {/* Right Column (Desktop Only): Floating MacBook dashboard mockup */}
           <div className="hidden md:flex md:col-span-5 relative h-full min-h-[360px] items-center justify-center">
             <div className="absolute -right-28 lg:-right-60 -top-8 -bottom-8 w-[380px] lg:w-[580px] flex items-center justify-center pointer-events-none select-none">
-              <img
+              <Image
                 src="/togetherly/mac.png"
                 alt="Togetherly Couples Money Planner on MacBook"
                 className="w-full h-auto object-contain select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.32)] pointer-events-auto"

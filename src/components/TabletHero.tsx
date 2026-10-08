@@ -1,23 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import {
   FileSpreadsheet,
   ArrowRight,
-  ExternalLink,
   ShieldCheck,
   Lock,
   Zap,
-  Gift,
   CheckCircle2,
   Maximize2,
   X,
-  Sparkles,
-  Smartphone,
-  Layers,
-  HeartHandshake
+  Smartphone
 } from 'lucide-react';
-import { couplesMoneyPlanner, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
+import { TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
 
 export default function TabletHero() {
   const [zoomOpen, setZoomOpen] = useState(false);
@@ -122,9 +118,13 @@ export default function TabletHero() {
             <div className="relative w-full max-w-xl lg:max-w-none group">
               {/* Soft tablet shadow and border treatment */}
               <div className="relative rounded-none overflow-hidden cursor-pointer" onClick={() => setZoomOpen(true)}>
-                <img
+                <Image
                   src="/togetherly/tablet.png"
                   alt="Togetherly Couples Money Planner Google Sheets on Tablet"
+                  width={800}
+                  height={444}
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 700px"
                   className="w-full h-auto object-contain select-none drop-shadow-2xl transition-transform duration-300 group-hover:scale-[1.015]"
                 />
 
@@ -183,9 +183,12 @@ export default function TabletHero() {
             </div>
 
             <div className="overflow-auto max-h-[80vh] flex items-center justify-center bg-[#FAF6EF] p-4">
-              <img
+              <Image
                 src="/togetherly/tablet.png"
                 alt="Togetherly Couples Money Planner on Tablet (Full View)"
+                width={1600}
+                height={888}
+                sizes="90vw"
                 className="w-full h-auto object-contain rounded-none"
               />
             </div>

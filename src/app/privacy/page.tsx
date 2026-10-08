@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ShieldCheck, Lock, EyeOff, Server, Mail, ChevronRight } from 'lucide-react';
+import { ShieldCheck, EyeOff, ChevronRight } from 'lucide-react';
+
+import { absoluteUrl } from '@/config/site';
+import { getBreadcrumbListSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -13,15 +16,24 @@ export const metadata: Metadata = {
     title: 'Privacy Policy | Togetherly',
     description:
       'Togetherly privacy policy. Zero financial data stored on our servers. 100% private in your personal Google Drive.',
-    url: 'https://gettogetherly.tech/privacy',
+    url: absoluteUrl('/privacy'),
     siteName: 'Togetherly',
     type: 'website',
   },
 };
 
 export default function PrivacyPage() {
+  const breadcrumbsJsonLd = getBreadcrumbListSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Privacy Policy', path: '/privacy' },
+  ]);
+
   return (
     <div className="min-h-screen bg-[#FAF6EF] text-[#243B38] py-12 sm:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }}
+      />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#6F7F7C]">

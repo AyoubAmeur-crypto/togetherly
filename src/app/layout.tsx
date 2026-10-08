@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans, Manrope } from 'next/font/google';
 import './globals.css';
 import TogetherlyNav from '@/components/TogetherlyNav';
 import TogetherlyFooter from '@/components/TogetherlyFooter';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
+import { SITE_URL, SITE_DEFAULTS } from '@/config/site';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -19,16 +21,36 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://gettogetherly.tech'),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Togetherly — Money Made Simpler, Life More Together',
-    template: '%s | Togetherly',
+    default: SITE_DEFAULTS.title,
+    template: SITE_DEFAULTS.titleTemplate,
   },
-  description:
-    'The complete 8-sheet Google Sheets financial planning system designed for couples. Track shared living costs, balance fair proportional splits, and achieve savings goals without tension.',
+  description: SITE_DEFAULTS.description,
   icons: {
     icon: '/togetherly/togetherly-icon.png',
     apple: '/togetherly/togetherly-icon.png',
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'Togetherly',
+    title: SITE_DEFAULTS.title,
+    description: SITE_DEFAULTS.description,
+    url: SITE_URL,
+    images: [
+      {
+        url: SITE_DEFAULTS.ogImage,
+        width: 1200,
+        height: 630,
+        alt: 'Togetherly — Financial Systems for Modern Couples',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_DEFAULTS.title,
+    description: SITE_DEFAULTS.description,
+    images: [SITE_DEFAULTS.ogImage],
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
@@ -50,6 +72,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/togetherly/togetherly-icon.png" />
       </head>
       <body className={`${plusJakartaSans.className} min-h-full flex flex-col bg-[#FAF6EF] text-[#243B38] antialiased selection:bg-[#F29B7F]/30 selection:text-[#174F4A]`}>
+        <GoogleAnalytics />
         <TogetherlyNav />
         <div className="flex-1">{children}</div>
         <TogetherlyFooter />

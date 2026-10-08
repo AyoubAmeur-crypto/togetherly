@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Calculator, ArrowRight, FileSpreadsheet, Sparkles, Scale, Percent } from 'lucide-react';
+import { Calculator, ArrowRight, Scale, Percent } from 'lucide-react';
+
+import { absoluteUrl } from '@/config/site';
+import { getBreadcrumbListSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Free Financial Tools for Couples',
@@ -13,31 +16,17 @@ export const metadata: Metadata = {
     title: 'Free Financial Tools for Couples | Togetherly',
     description:
       'Free, interactive financial planning tools and calculators designed for couples. Split expenses equitably and plan shared money with confidence.',
-    url: 'https://gettogetherly.tech/tools',
+    url: absoluteUrl('/tools'),
     siteName: 'Togetherly',
     type: 'website',
   },
 };
 
 export default function ToolsDirectoryPage() {
-  const breadcrumbsJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://gettogetherly.tech/',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Tools',
-        item: 'https://gettogetherly.tech/tools',
-      },
-    ],
-  };
+  const breadcrumbsJsonLd = getBreadcrumbListSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Tools', path: '/tools' },
+  ]);
 
   return (
     <div className="min-h-screen bg-[#FAF6EF] text-[#243B38] py-16 sm:py-24">

@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Clock, Calendar, Calculator, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, BookOpen, Clock, Calendar, Calculator, CheckCircle2 } from 'lucide-react';
 import { getAllPosts, upcomingBlogTopics } from '@/content/blog';
 import EmailCapture from '@/components/EmailCapture';
 
+
+import { absoluteUrl } from '@/config/site';
+import { getBreadcrumbListSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Blog — Guides & Frameworks for Couples Finances',
@@ -16,7 +19,7 @@ export const metadata: Metadata = {
     title: 'Blog — Guides & Essays on Couples Finances | Togetherly',
     description:
       'Practical guides, relationship finance frameworks, and budgeting advice for modern couples planning their shared living, fair splits, and milestones.',
-    url: 'https://gettogetherly.tech/blog',
+    url: absoluteUrl('/blog'),
     siteName: 'Togetherly',
     type: 'website',
   },
@@ -25,24 +28,10 @@ export const metadata: Metadata = {
 export default function BlogIndexPage() {
   const posts = getAllPosts();
 
-  const breadcrumbsJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://gettogetherly.tech/',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Blog',
-        item: 'https://gettogetherly.tech/blog',
-      },
-    ],
-  };
+  const breadcrumbsJsonLd = getBreadcrumbListSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Blog', path: '/blog' },
+  ]);
 
   return (
     <div className="min-h-screen bg-[#FAF6EF] text-[#243B38] py-16 sm:py-24">

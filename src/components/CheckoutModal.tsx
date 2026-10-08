@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { X, ShieldCheck, ShoppingBag, ExternalLink, ArrowRight } from 'lucide-react';
+import React from 'react';
+import { X, ShoppingBag, ArrowRight } from 'lucide-react';
 import { couplesMoneyPlanner, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
 
 interface CheckoutModalProps {

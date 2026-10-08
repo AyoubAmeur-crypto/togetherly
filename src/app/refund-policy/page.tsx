@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { BadgeCheck, ChevronRight, Mail, Clock, HelpCircle } from 'lucide-react';
+import { BadgeCheck, ChevronRight, Mail } from 'lucide-react';
+
+import { absoluteUrl } from '@/config/site';
+import { getBreadcrumbListSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Refund Policy',
@@ -13,15 +16,24 @@ export const metadata: Metadata = {
     title: 'Refund Policy | Togetherly',
     description:
       'Togetherly refund policy. Simple 30-day money-back guarantee for all digital products.',
-    url: 'https://gettogetherly.tech/refund-policy',
+    url: absoluteUrl('/refund-policy'),
     siteName: 'Togetherly',
     type: 'website',
   },
 };
 
 export default function RefundPolicyPage() {
+  const breadcrumbsJsonLd = getBreadcrumbListSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Refund Policy', path: '/refund-policy' },
+  ]);
+
   return (
     <div className="min-h-screen bg-[#FAF6EF] text-[#243B38] py-12 sm:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }}
+      />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#6F7F7C]">

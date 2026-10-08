@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Mail, CheckCircle2, AlertCircle, Loader2, Send, ShieldCheck, Check } from 'lucide-react';
+import Image from 'next/image';
+import { Mail, AlertCircle, Loader2, Send, ShieldCheck, Check } from 'lucide-react';
 import { trackEmailSignup } from '@/lib/analytics';
 
 interface EmailSubscribeSectionProps {
@@ -118,11 +119,14 @@ export default function EmailSubscribeSection({
               }}
             />
 
-            <img
+            <Image
               src="/togetherly/IPHONE.png"
               alt="Togetherly Couples Money Planner on iPhone"
-              className="w-full sm:max-w-2xl lg:max-w-none lg:w-[690px] xl:w-[690px] h-auto object-contain object-bottom select-none drop-shadow-2xl relative z-10"
+              width={690}
+              height={388}
+              sizes="(max-width: 1024px) 100vw, 690px"
               loading="lazy"
+              className="w-full sm:max-w-2xl lg:max-w-none lg:w-[690px] xl:w-[690px] h-auto object-contain object-bottom select-none drop-shadow-2xl relative z-10"
             />
           </div>
 
@@ -130,9 +134,12 @@ export default function EmailSubscribeSection({
           <div className="lg:col-span-5 xl:col-span-5 order-2 lg:order-1 space-y-6 text-left pb-10 sm:pb-16 lg:pb-20 relative z-20">
             {/* Logo on Top */}
             <div className="flex items-center">
-              <img
+              <Image
                 src="/togetherly/togetherly-logo-light.png"
                 alt="Togetherly"
+                width={133}
+                height={40}
+                loading="lazy"
                 className="h-8 sm:h-9 w-auto object-contain"
               />
             </div>

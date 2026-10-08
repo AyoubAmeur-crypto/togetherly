@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { FileText, ChevronRight, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { FileText, ChevronRight, AlertCircle } from 'lucide-react';
+
+import { absoluteUrl } from '@/config/site';
+import { getBreadcrumbListSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
@@ -13,15 +16,24 @@ export const metadata: Metadata = {
     title: 'Terms of Service | Togetherly',
     description:
       'Togetherly terms of service. Personal license terms and informational usage boundaries for our digital spreadsheet products.',
-    url: 'https://gettogetherly.tech/terms',
+    url: absoluteUrl('/terms'),
     siteName: 'Togetherly',
     type: 'website',
   },
 };
 
 export default function TermsPage() {
+  const breadcrumbsJsonLd = getBreadcrumbListSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Terms of Service', path: '/terms' },
+  ]);
+
   return (
     <div className="min-h-screen bg-[#FAF6EF] text-[#243B38] py-12 sm:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }}
+      />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#6F7F7C]">
