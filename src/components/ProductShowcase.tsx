@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import {
   CheckCircle2,
   Maximize2,
@@ -9,11 +10,9 @@ import {
   Calendar,
   Scale,
   Target,
-  Sparkles,
-  ExternalLink,
-  ShieldCheck
+  Sparkles
 } from 'lucide-react';
-import { couplesMoneyPlanner, TogetherlySheetTab, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
+import { couplesMoneyPlanner, TogetherlySheetTab } from '../config/productConfig';
 
 export default function ProductShowcase() {
   const [activeTabId, setActiveTabId] = useState<string>(couplesMoneyPlanner.tabs[0].id);
@@ -109,11 +108,14 @@ export default function ProductShowcase() {
               onClick={() => setZoomModalImage({ src: activeTab.screenshot, title: activeTab.title })}
               className="relative w-full cursor-zoom-in rounded-none overflow-hidden border border-[#174F4A]/10 shadow-none"
             >
-              <img
+              <Image
                 src={activeTab.screenshot}
                 alt={`${activeTab.name} - Couples Money Planner`}
-                className="w-full h-auto object-cover rounded-none"
+                width={1200}
+                height={750}
+                sizes="(max-width: 1024px) 100vw, 900px"
                 loading="lazy"
+                className="w-full h-auto object-cover rounded-none"
               />
               <div className="absolute inset-0 bg-[#174F4A]/0 group-hover:bg-[#174F4A]/5 transition-colors flex items-center justify-center">
                 <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#174F4A] text-[#FAF6EF] text-xs font-medium px-3 py-1.5 rounded-none shadow-none flex items-center gap-1.5">
@@ -198,9 +200,12 @@ export default function ProductShowcase() {
             </div>
 
             <div className="overflow-auto max-h-[80vh] flex items-center justify-center bg-[#FAF6EF] p-2">
-              <img
+              <Image
                 src={zoomModalImage.src}
                 alt={zoomModalImage.title}
+                width={1800}
+                height={1100}
+                sizes="90vw"
                 className="w-full h-auto object-contain rounded-none"
               />
             </div>

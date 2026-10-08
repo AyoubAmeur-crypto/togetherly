@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import {
   CheckCircle2,
@@ -36,6 +37,7 @@ import {
   TOGETHERLY_CHECKOUT_URL
 } from '../config/productConfig';
 import { trackProductView, trackCheckoutClick } from '../lib/analytics';
+import { getCouplesMoneyPlannerProductSchema, getBreadcrumbListSchema } from '@/lib/schema';
 
 export default function CouplesMoneyPlannerView() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'monthly' | 'bills'>('dashboard');
@@ -135,55 +137,13 @@ export default function CouplesMoneyPlannerView() {
     }
   }, [activeTab]);
 
-  // Schema.org structured data (100% factual)
-  const productJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: 'Togetherly — Couples Money Planner',
-    image: 'https://gettogetherly.tech/togetherly/tablet.png',
-    description:
-      'The complete 8-sheet Google Sheets financial planning system for couples. Plan monthly budgets, track expenses, automate fair splits, and build savings goals together.',
-    brand: {
-      '@type': 'Brand',
-      name: 'Togetherly',
-    },
-    offers: {
-      '@type': 'Offer',
-      price: '19.00',
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-      url: TOGETHERLY_CHECKOUT_URL,
-      seller: {
-        '@type': 'Organization',
-        name: 'Togetherly',
-      },
-    },
-  };
-
-  const breadcrumbsJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://gettogetherly.tech/',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Products',
-        item: 'https://gettogetherly.tech/products',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: 'Couples Money Planner',
-        item: 'https://gettogetherly.tech/products/couples-money-planner',
-      },
-    ],
-  };
+  // Schema.org structured data (100% factual, canonical domain)
+  const productJsonLd = getCouplesMoneyPlannerProductSchema();
+  const breadcrumbsJsonLd = getBreadcrumbListSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Products', path: '/products' },
+    { name: 'Couples Money Planner', path: '/products/couples-money-planner' },
+  ]);
 
   return (
     <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#FAF6EF] text-[#243B38] font-sans antialiased selection:bg-[#F29B7F]/30 selection:text-[#174F4A]">
@@ -262,9 +222,13 @@ export default function CouplesMoneyPlannerView() {
 
               {/* RIGHT COLUMN: Tablet Product Mockup (Bigger, Clean, No Frame Box, No Zoom, No Shadow) */}
               <div className="lg:col-span-7 order-1 lg:order-2 flex justify-center lg:justify-end">
-                <img
+                <Image
                   src="/togetherly/tablet.png"
                   alt="Togetherly Couples Money Planner tablet mockup in Google Sheets"
+                  width={800}
+                  height={444}
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 800px"
                   className="w-full max-w-xl sm:max-w-2xl lg:max-w-3xl xl:max-w-4xl h-auto object-contain select-none shadow-none"
                 />
               </div>
@@ -278,9 +242,12 @@ export default function CouplesMoneyPlannerView() {
         <section className="py-14 sm:py-20 bg-[#FFFFFF] border-b border-[#174F4A]/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
             <div className="text-center">
-              <img
+              <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
+                width={147}
+                height={44}
+                loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto"
               />
             </div>
@@ -338,9 +305,12 @@ export default function CouplesMoneyPlannerView() {
         <section className="py-20 sm:py-28 bg-[#FAF6EF] border-b border-[#174F4A]/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center space-y-4 mb-14">
-              <img
+              <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
+                width={147}
+                height={44}
+                loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto mb-10"
               />
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#174F4A] tracking-tight">
@@ -514,18 +484,25 @@ export default function CouplesMoneyPlannerView() {
                 >
                   {currentTabItem.hasScreen ? (
                     <div className="bg-[#FAF6EF] flex items-center justify-center">
-                      <img
+                      <Image
                         src={currentTabItem.screenshot}
                         alt={currentTabItem.alt}
+                        width={1100}
+                        height={680}
+                        sizes="(max-width: 1024px) 100vw, 800px"
+                        loading="lazy"
                         className="w-full h-auto object-contain select-none rounded-none border-none shadow-none"
                       />
                     </div>
                   ) : (
                     /* Recurring Bills: clean direct content separated by the divider line */
                     <div className="flex flex-col items-center justify-center space-y-5 text-center py-6 sm:py-10">
-                      <img
+                      <Image
                         src={togetherlyBrand.assets.logoPrimary}
                         alt="Togetherly"
+                        width={147}
+                        height={44}
+                        loading="lazy"
                         className="h-10 sm:h-12 w-auto object-contain mx-auto"
                       />
                       <div className="space-y-2 max-w-md mx-auto">
@@ -623,9 +600,13 @@ export default function CouplesMoneyPlannerView() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
               {/* Screenshot matching section background, no borders, no shadow */}
               <div className="lg:col-span-7 order-2 lg:order-1 flex items-center justify-center bg-[#FAF6EF]">
-                <img
+                <Image
                   src="/togetherly/goals.png"
                   alt="Togetherly Shared Goals tracker screenshot in Google Sheets"
+                  width={710}
+                  height={235}
+                  sizes="(max-width: 1024px) 100vw, 600px"
+                  loading="lazy"
                   className="w-full h-auto object-contain select-none rounded-none border-none shadow-none"
                 />
               </div>
@@ -692,9 +673,12 @@ export default function CouplesMoneyPlannerView() {
               />
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="space-y-4 text-center md:text-left max-w-md">
-                  <img
+                  <Image
                     src={togetherlyBrand.assets.logoLight}
                     alt="Togetherly"
+                    width={133}
+                    height={40}
+                    loading="lazy"
                     className="h-9 sm:h-10 w-auto object-contain mx-auto md:mx-0 shadow-none"
                   />
                   <h3 className="text-2xl sm:text-3xl font-extrabold text-[#FAF6EF]">
@@ -775,9 +759,13 @@ export default function CouplesMoneyPlannerView() {
 
               {/* RIGHT COLUMN: Significantly Bigger Screen Mockup starting from the bottom of the section */}
               <div className="lg:col-span-7 order-2 flex items-end justify-center lg:justify-end">
-                <img
+                <Image
                   src="/togetherly/mac-screen.png"
                   alt="Togetherly Couples Money Planner Screen Display"
+                  width={1000}
+                  height={516}
+                  sizes="(max-width: 1024px) 100vw, 1000px"
+                  loading="lazy"
                   style={{
                     filter:
                       'drop-shadow(0 -12px 28px rgba(15, 56, 52, 0.14)) drop-shadow(0 -4px 12px rgba(0, 0, 0, 0.22)) drop-shadow(0 24px 45px rgba(15, 56, 52, 0.32)) drop-shadow(0 8px 18px rgba(0, 0, 0, 0.20))',
@@ -795,9 +783,12 @@ export default function CouplesMoneyPlannerView() {
         <section className="py-20 sm:py-28 bg-[#FFFFFF] border-b border-[#174F4A]/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
             <div className="max-w-3xl mx-auto text-center space-y-4">
-              <img
+              <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
+                width={147}
+                height={44}
+                loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto mb-10"
               />
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#174F4A] tracking-tight">
@@ -856,9 +847,12 @@ export default function CouplesMoneyPlannerView() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 text-center">
             {/* Header */}
             <div className="space-y-4 max-w-3xl mx-auto">
-              <img
+              <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
+                width={147}
+                height={44}
+                loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto mb-10"
               />
              
@@ -1093,9 +1087,12 @@ export default function CouplesMoneyPlannerView() {
         <section className="py-20 sm:py-28 bg-[#FFFFFF] border-b border-[#174F4A]/10">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <div className="max-w-3xl mx-auto text-center space-y-4">
-              <img
+              <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
+                width={147}
+                height={44}
+                loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto mb-10"
               />
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#174F4A] tracking-tight">
@@ -1220,9 +1217,12 @@ export default function CouplesMoneyPlannerView() {
         <section id="faq" className="py-20 sm:py-28 bg-[#FAF6EF] border-b border-[#174F4A]/10">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <div className="text-center space-y-4">
-              <img
+              <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
+                width={147}
+                height={44}
+                loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto mb-10"
               />
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#174F4A] tracking-tight">
@@ -1295,9 +1295,12 @@ export default function CouplesMoneyPlannerView() {
 
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
             <div className="space-y-4 max-w-2xl mx-auto">
-              <img
+              <Image
                 src={togetherlyBrand.assets.logoLight}
                 alt="Togetherly"
+                width={147}
+                height={44}
+                loading="lazy"
                 className="h-10 sm:h-12 w-auto object-contain mx-auto mb-2"
               />
               <h2 className="text-3xl sm:text-5xl font-extrabold text-[#FAF6EF] tracking-tight leading-tight">

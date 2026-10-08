@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { togetherlyBrand, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
@@ -67,9 +68,12 @@ export default function TogetherlyNav() {
                 className="flex items-center gap-3 group text-left cursor-pointer"
                 title="Togetherly — Money Made Simpler"
               >
-                <img
+                <Image
                   src={togetherlyBrand.assets.logoLight}
                   alt="Togetherly"
+                  width={133}
+                  height={40}
+                  priority
                   className="h-9 sm:h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
                 />
               </Link>
@@ -179,9 +183,11 @@ export default function TogetherlyNav() {
           {/* Top Header inside Drawer */}
           <div className="flex items-center justify-between h-20 px-5 sm:px-6 border-b border-[#2C7A73]/40 bg-[#174F4A] shrink-0">
             <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
-              <img
+              <Image
                 src={togetherlyBrand.assets.logoLight}
                 alt="Togetherly"
+                width={120}
+                height={36}
                 className="h-9 w-auto object-contain"
               />
             </Link>

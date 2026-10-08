@@ -6,7 +6,6 @@ import {
   CheckCircle2,
   Scale,
   Percent,
-  HelpCircle,
   FileSpreadsheet,
   ChevronRight,
   BookOpen,
@@ -16,6 +15,9 @@ import WhatsAppHelpCTA from '@/components/WhatsAppHelpCTA';
 import EmailCapture from '@/components/EmailCapture';
 import TrackedProductLink from '@/components/TrackedProductLink';
 
+
+import { absoluteUrl } from '@/config/site';
+import { getCalculatorWebApplicationSchema, getBreadcrumbListSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Couples Expense Split Calculator (50/50 vs. Proportional)',
@@ -28,59 +30,19 @@ export const metadata: Metadata = {
     title: 'Couples Expense Split Calculator (50/50 vs. Proportional) | Togetherly',
     description:
       'Calculate fair contributions based on each partner’s income. Free interactive calculator comparing 50/50 vs. proportional splitting with zero sign-up.',
-    url: 'https://gettogetherly.tech/tools/couples-expense-split-calculator',
+    url: absoluteUrl('/tools/couples-expense-split-calculator'),
     siteName: 'Togetherly',
     type: 'website',
   },
 };
 
 export default function CouplesExpenseSplitCalculatorPage() {
-  const webAppJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'Togetherly Couples Expense Split Calculator',
-    url: 'https://gettogetherly.tech/tools/couples-expense-split-calculator',
-    description:
-      'Free interactive calculator that helps couples compare equal 50/50 and income-proportional shared expense splitting.',
-    applicationCategory: 'FinanceApplication',
-    operatingSystem: 'All',
-    browserRequirements: 'Requires JavaScript. Requires HTML5.',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-    creator: {
-      '@type': 'Organization',
-      name: 'Togetherly',
-      url: 'https://gettogetherly.tech',
-    },
-  };
-
-  const breadcrumbsJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://gettogetherly.tech/',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Tools',
-        item: 'https://gettogetherly.tech/tools',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: 'Couples Expense Split Calculator',
-        item: 'https://gettogetherly.tech/tools/couples-expense-split-calculator',
-      },
-    ],
-  };
+  const webAppJsonLd = getCalculatorWebApplicationSchema();
+  const breadcrumbsJsonLd = getBreadcrumbListSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Tools', path: '/tools' },
+    { name: 'Couples Expense Split Calculator', path: '/tools/couples-expense-split-calculator' },
+  ]);
 
   return (
     <div className="min-h-screen bg-[#FAF6EF] text-[#243B38] py-12 sm:py-20">

@@ -33,7 +33,33 @@ export interface CalculatorUseProperties {
   action?: string;
 }
 
+export interface CalculatorCompleteProperties {
+  split_method?: string;
+  split_ratio?: string;
+  source_page?: string;
+}
+
 export interface CalculatorToProductClickProperties {
+  source_page: string;
+  cta_location: string;
+}
+
+export interface TemplateDownloadProperties {
+  template_name: string;
+  source_page: string;
+  format?: string;
+}
+
+export interface ProductCtaClickProperties {
+  product: string;
+  source_page: string;
+  cta_location: string;
+  cta_text?: string;
+}
+
+export interface OutboundProductClickProperties {
+  product: string;
+  destination_url: string;
   source_page: string;
   cta_location: string;
 }
@@ -179,6 +205,34 @@ export function trackArticleToProductClick(properties: ArticleToProductClickProp
  */
 export function trackCalculatorUse(properties: CalculatorUseProperties = {}): void {
   trackEvent('calculator_use', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when a user completes a calculation (after settling on inputs)
+ */
+export function trackCalculatorComplete(properties: CalculatorCompleteProperties = {}): void {
+  trackEvent('calculator_complete', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when a user downloads or opens a template asset
+ */
+export function trackTemplateDownload(properties: TemplateDownloadProperties): void {
+  trackEvent('template_download', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when a user clicks a product CTA (internal funnel navigation)
+ */
+export function trackProductCtaClick(properties: ProductCtaClickProperties): void {
+  trackEvent('product_cta_click', properties as unknown as Record<string, unknown>);
+}
+
+/**
+ * Track when a user clicks an outbound commercial purchase/checkout link
+ */
+export function trackOutboundProductClick(properties: OutboundProductClickProperties): void {
+  trackEvent('outbound_product_click', properties as unknown as Record<string, unknown>);
 }
 
 /**

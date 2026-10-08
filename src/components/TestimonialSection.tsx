@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Star } from 'lucide-react';
 
 interface TestimonialSectionProps {
@@ -48,12 +49,13 @@ export default function TestimonialSection({
 
         {/* Author Info */}
         <div className="flex items-center justify-center gap-3.5 pt-3">
-          <img
+          <Image
             src="/togetherly/ayoubameur.png"
             alt="Ayoub Ameur"
             className="w-13 h-13 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-[#174F4A]/15 shadow-xs"
             width={56}
             height={56}
+            loading="lazy"
           />
           <div className="text-left">
             <div className="text-base font-extrabold text-[#174F4A] tracking-tight">

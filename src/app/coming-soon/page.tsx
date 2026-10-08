@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, FileSpreadsheet, Sparkles, CheckCircle2, Clock } from 'lucide-react';
-import { togetherlyBrand, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '@/config/productConfig';
+import { ArrowRight, FileSpreadsheet, CheckCircle2, Clock } from 'lucide-react';
+import { togetherlyBrand } from '@/config/productConfig';
 
 export default function ComingSoonPage() {
   const [email, setEmail] = useState('');

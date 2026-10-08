@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   ShieldCheck,
   Heart,
@@ -31,9 +32,12 @@ export default function TogetherlyFooter() {
           {/* Brand Ethos Column */}
           <div className="w-full lg:w-[32%] xl:w-[28%] space-y-4 sm:space-y-5 shrink-0">
             <Link href="/" className="inline-block cursor-pointer">
-              <img
+              <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
+                width={147}
+                height={44}
+                loading="lazy"
                 className="h-9 sm:h-11 w-auto object-contain"
               />
             </Link>

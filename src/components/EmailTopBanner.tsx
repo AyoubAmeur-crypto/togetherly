@@ -30,29 +30,33 @@ export default function EmailTopBanner({ onVisibilityChange }: EmailTopBannerPro
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // Check if globally already subscribed
-    const alreadySubscribed = localStorage.getItem('togetherly_subscribed') === 'true';
-    if (alreadySubscribed) {
-      setIsVisible(false);
-      onVisibilityChange?.(false);
-      return;
-    }
+    const timer = setTimeout(() => {
+      // Check if globally already subscribed
+      const alreadySubscribed = localStorage.getItem('togetherly_subscribed') === 'true';
+      if (alreadySubscribed) {
+        setIsVisible(false);
+        onVisibilityChange?.(false);
+        return;
+      }
 
-    if (!isTargetPage) {
-      setIsVisible(false);
-      onVisibilityChange?.(false);
-      return;
-    }
+      if (!isTargetPage) {
+        setIsVisible(false);
+        onVisibilityChange?.(false);
+        return;
+      }
 
-    // Check if dismissed on current page context (Story vs Product)
-    const isDismissedOnThisPage = sessionStorage.getItem(dismissKey) === 'true';
-    if (isDismissedOnThisPage) {
-      setIsVisible(false);
-      onVisibilityChange?.(false);
-    } else {
-      setIsVisible(true);
-      onVisibilityChange?.(true);
-    }
+      // Check if dismissed on current page context (Story vs Product)
+      const isDismissedOnThisPage = sessionStorage.getItem(dismissKey) === 'true';
+      if (isDismissedOnThisPage) {
+        setIsVisible(false);
+        onVisibilityChange?.(false);
+      } else {
+        setIsVisible(true);
+        onVisibilityChange?.(true);
+      }
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, [pathname, isTargetPage, dismissKey, onVisibilityChange]);
 
   const handleDismiss = () => {

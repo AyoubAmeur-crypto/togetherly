@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { trackWhatsAppClick } from '@/lib/analytics';
 import { TOGETHERLY_WHATSAPP_NUMBER, formatWhatsAppUrl } from '@/config/productConfig';
@@ -120,11 +121,14 @@ export default function WhatsAppHelpCTA({
             {/* Right Column: Customer Support Illustration on Right */}
             <div className="lg:col-span-5 xl:col-span-5 order-2 flex items-center justify-center lg:justify-end">
               <div className="relative w-full max-w-[380px] sm:max-w-[440px] lg:max-w-[480px]">
-                <img
+                <Image
                   src={illustrationSrc}
                   alt="Togetherly WhatsApp Customer Support"
-                  className="w-full h-auto object-contain select-none"
+                  width={480}
+                  height={319}
+                  sizes="(max-width: 1024px) 100vw, 480px"
                   loading="lazy"
+                  className="w-full h-auto object-contain select-none"
                 />
               </div>
             </div>

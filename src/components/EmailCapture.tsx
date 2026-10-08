@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Mail, CheckCircle2, AlertCircle, Loader2, Sparkles, Send } from 'lucide-react';
+import { Mail, CheckCircle2, AlertCircle, Loader2, Send } from 'lucide-react';
 import { trackEmailFormView, trackEmailSignup } from '@/lib/analytics';
 
 export interface EmailCaptureProps {

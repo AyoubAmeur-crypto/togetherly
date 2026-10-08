@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   ArrowRight,
   CheckCircle2,
-  ExternalLink,
   Check,
   Layers,
   Compass,
@@ -19,7 +19,7 @@ import WhatsAppHelpCTA from './WhatsAppHelpCTA';
 import FloatingWhatsAppCTA from './FloatingWhatsAppCTA';
 import EmailSubscribeSection from './EmailSubscribeSection';
 import TestimonialSection from './TestimonialSection';
-import { couplesMoneyPlanner, togetherlyBrand, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
+import { togetherlyBrand, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
 
 export default function StoryView() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
@@ -150,9 +150,13 @@ export default function StoryView() {
             </div>
 
             <div className="max-w-5xl mx-auto relative flex items-center justify-center">
-              <img
+              <Image
                 src="/togetherly/dashboard.png"
                 alt="Togetherly Google Sheets Whole Dashboard"
+                width={1156}
+                height={722}
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                loading="lazy"
                 className="w-full h-auto max-h-[620px] object-contain select-none rounded-none border border-[#174F4A]/10"
               />
             </div>
@@ -226,9 +230,13 @@ export default function StoryView() {
                   </div>
                 </div>
                 <div className="hidden lg:flex lg:col-span-7 items-center justify-center">
-                  <img
+                  <Image
                     src="/togetherly/monthly-plan.png"
                     alt="Togetherly Monthly Plan Sheet"
+                    width={689}
+                    height={373}
+                    sizes="(max-width: 1024px) 100vw, 600px"
+                    loading="lazy"
                     className="w-full h-auto object-contain select-none pointer-events-none rounded-none border border-[#174F4A]/10"
                   />
                 </div>
@@ -237,9 +245,13 @@ export default function StoryView() {
               {/* Ritual 2 */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
                 <div className="hidden lg:flex lg:col-span-7 lg:order-1 items-center justify-center">
-                  <img
+                  <Image
                     src="/togetherly/goals.png"
                     alt="Togetherly Shared Goals Sheet"
+                    width={710}
+                    height={235}
+                    sizes="(max-width: 1024px) 100vw, 600px"
+                    loading="lazy"
                     className="w-full h-auto object-contain select-none pointer-events-none rounded-none border border-[#174F4A]/10"
                   />
                 </div>
@@ -347,9 +359,12 @@ export default function StoryView() {
         <section className="py-24 sm:py-32 bg-[#FAF6EF] border-t border-[#174F4A]/10 overflow-hidden relative">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
             <div className="max-w-xl mx-auto">
-              <img
+              <Image
                 src="/togetherly/couple-illustration.svg"
                 alt="Togetherly Couple Falling in Love Illustration"
+                width={600}
+                height={418}
+                loading="lazy"
                 className="w-full h-auto max-h-[360px] sm:max-h-[420px] object-contain mx-auto select-none pointer-events-none"
               />
             </div>
@@ -410,9 +425,12 @@ export default function StoryView() {
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
             {/* Togetherly Logo on Top */}
             <div className="flex justify-center">
-              <img
+              <Image
                 src={togetherlyBrand.assets.logoLight}
                 alt="Togetherly"
+                width={180}
+                height={54}
+                loading="lazy"
                 className="h-12 sm:h-16 w-auto object-contain drop-shadow-sm"
               />
             </div>
@@ -519,10 +537,14 @@ export default function StoryView() {
               {/* Tablet Mockup Image */}
               <div className="w-full lg:w-[62%] order-1 lg:order-2 flex items-center justify-center lg:justify-end">
                 <Link href="/products/couples-money-planner" className="group block cursor-pointer">
-                  <img
+                  <Image
                     src="/togetherly/tablet.png"
                     alt="Togetherly Couples Money Planner on Tablet"
-                    className="w-full max-w-4xl lg:w-[800px] h-auto object-contain select-none drop-shadow-2xl transition-transform duration-300 "
+                    width={800}
+                    height={444}
+                    sizes="(max-width: 1024px) 100vw, 800px"
+                    loading="lazy"
+                    className="w-full max-w-4xl lg:w-[800px] h-auto object-contain select-none drop-shadow-2xl transition-transform duration-300"
                   />
                 </Link>
               </div>

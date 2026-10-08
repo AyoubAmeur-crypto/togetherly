@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import CouplesMoneyPlannerView from '@/components/CouplesMoneyPlannerView';
 
+import { absoluteUrl } from '@/config/site';
+
 export const metadata: Metadata = {
   title: 'Couples Budget Planner for Google Sheets',
   description:
@@ -12,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Couples Budget Planner for Google Sheets | Togetherly',
     description:
       'Plan your money together, without making money complicated. Instant Google Sheets access, automated 50/50 or income-based splits, and lifetime access for $19.',
-    url: 'https://gettogetherly.tech/products/couples-money-planner',
+    url: absoluteUrl('/products/couples-money-planner'),
     siteName: 'Togetherly',
     images: ['/togetherly/tablet.png', '/togetherly/dashboard.png'],
     type: 'website',

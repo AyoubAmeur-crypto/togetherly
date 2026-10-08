@@ -1,11 +1,12 @@
 import type { MetadataRoute } from 'next';
-import { getAllPosts } from '../content/blog';
+import { SITE_URL } from '@/config/site';
+import { getAllPosts } from '@/content/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://gettogetherly.tech';
+  const baseUrl = SITE_URL;
   const lastModified = new Date('2026-10-01');
 
-  // Core canonical indexable pages that actually exist
+  // Core canonical indexable pages that actually exist and return HTTP 200
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -68,4 +69,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...staticRoutes, ...blogRoutes];
 }
-

@@ -21,6 +21,9 @@ export async function generateStaticParams() {
   }));
 }
 
+import { absoluteUrl } from '@/config/site';
+import { getBlogPostSchema, getBreadcrumbListSchema } from '@/lib/schema';
+
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
@@ -31,7 +34,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const postUrl = `https://gettogetherly.tech/blog/${post.slug}`;
+  const postUrl = absoluteUrl(`/blog/${post.slug}`);
   const ogImage = post.ogImage || '/togetherly/togetherly.png';
 
   return {
@@ -96,59 +99,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const relatedPosts = getRelatedPosts(post);
 
-  // Structured Data (BlogPosting / Article)
-  const blogPostingJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.description,
-    datePublished: post.publishedAt,
-    dateModified: post.modifiedAt || post.publishedAt,
-    author: {
-      '@type': 'Person',
-      name: post.author.name,
-      ...(post.author.role ? { jobTitle: post.author.role } : {}),
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Togetherly',
-      url: 'https://gettogetherly.tech',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://gettogetherly.tech/togetherly/togetherly-logo-primary.png',
-      },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://gettogetherly.tech/blog/${post.slug}`,
-    },
-    image: post.ogImage || 'https://gettogetherly.tech/togetherly/togetherly.png',
-  };
-
-  const breadcrumbsJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://gettogetherly.tech/',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Blog',
-        item: 'https://gettogetherly.tech/blog',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: post.title,
-        item: `https://gettogetherly.tech/blog/${post.slug}`,
-      },
-    ],
-  };
+  // Structured Data (BlogPosting / Article & Breadcrumbs)
+  const blogPostingJsonLd = getBlogPostSchema(post);
+  const breadcrumbsJsonLd = getBreadcrumbListSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Blog', path: '/blog' },
+    { name: post.title, path: `/blog/${post.slug}` },
+  ]);
 
   const cta = post.productCta || {
     headline: 'Manage your monthly couples budget without resentment.',
