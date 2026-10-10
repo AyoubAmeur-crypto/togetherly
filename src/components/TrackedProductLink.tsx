@@ -6,7 +6,7 @@ import { trackArticleToProductClick, trackCalculatorToProductClick } from '@/lib
 
 interface TrackedProductLinkProps {
   href: string;
-  sourceType: 'article' | 'calculator';
+  sourceType: 'article' | 'calculator' | 'template';
   sourcePage: string;
   ctaLocation: string;
   className?: string;

@@ -72,7 +72,7 @@ export default function ToolsDirectoryPage() {
                   href="/tools/couples-expense-split-calculator"
                   className="hover:text-[#2C7A73] transition-colors"
                 >
-                  Couples Expense Split Calculator
+                  Split Bills Based on Income Calculator
                 </Link>
               </h2>
 

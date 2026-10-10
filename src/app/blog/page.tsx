@@ -66,7 +66,7 @@ export default function BlogIndexPage() {
               <span>Interactive Standalone Tool</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#174F4A]">
-              Couples Expense Split Calculator
+              Split Bills Based on Income Calculator
             </h2>
             <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
               Calculate fair contributions based on each partner’s income. Compare a rigid 50/50 split against proportional income-weighted splitting with zero sign-up.

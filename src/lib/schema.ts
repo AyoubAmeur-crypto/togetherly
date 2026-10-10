@@ -76,10 +76,10 @@ export function getCalculatorWebApplicationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'Togetherly Couples Expense Split Calculator',
+    name: 'Split Bills Based on Income Calculator',
     url: absoluteUrl('/tools/couples-expense-split-calculator'),
     description:
-      'Free interactive calculator that helps couples compare equal 50/50 and income-proportional shared expense splitting.',
+      'Free interactive calculator to split shared bills based on income. Compare proportional and 50/50 expense splits for couples with different incomes.',
     applicationCategory: 'FinanceApplication',
     operatingSystem: 'All',
     browserRequirements: 'Requires JavaScript. Requires HTML5.',
@@ -145,7 +145,7 @@ export function getBlogPostSchema(post: BlogPost) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
-    headline: post.title,
+    headline: post.h1 || post.title,
     description: post.description,
     datePublished: post.publishedAt,
     dateModified: post.modifiedAt || post.publishedAt,

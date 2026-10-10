@@ -6,14 +6,14 @@ import { getOrganizationSchema, getWebSiteSchema } from '@/lib/schema';
 export const metadata: Metadata = {
   title: 'Togetherly — Money Made Simpler, Life More Together',
   description:
-    'Togetherly creates calm, beautifully structured financial planning systems and Google Sheets templates designed for modern couples. Track shared expenses, fair splits, and life milestones together.',
+    'Togetherly creates calm couples budgeting tools and Google Sheets templates to track shared expenses, automate fair bill splits, and build financial harmony.',
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'Togetherly — Money Made Simpler, Life More Together',
     description:
-      'Togetherly creates calm, beautifully structured financial planning systems and Google Sheets templates designed for modern couples.',
+      'Togetherly creates calm couples budgeting tools and Google Sheets templates to track shared expenses, automate fair bill splits, and build financial harmony.',
     url: absoluteUrl('/'),
     siteName: 'Togetherly',
     images: ['/togetherly/togetherly.png'],

@@ -121,8 +121,8 @@ export default function TabletHero() {
                 <Image
                   src="/togetherly/tablet.png"
                   alt="Togetherly Couples Money Planner Google Sheets on Tablet"
-                  width={800}
-                  height={444}
+                  width={900}
+                  height={500}
                   priority
                   sizes="(max-width: 1024px) 100vw, 700px"
                   className="w-full h-auto object-contain select-none drop-shadow-2xl transition-transform duration-300 group-hover:scale-[1.015]"
@@ -186,8 +186,8 @@ export default function TabletHero() {
               <Image
                 src="/togetherly/tablet.png"
                 alt="Togetherly Couples Money Planner on Tablet (Full View)"
-                width={1600}
-                height={888}
+                width={1800}
+                height={1000}
                 sizes="90vw"
                 className="w-full h-auto object-contain rounded-none"
               />

@@ -122,8 +122,8 @@ export default function EmailSubscribeSection({
             <Image
               src="/togetherly/IPHONE.png"
               alt="Togetherly Couples Money Planner on iPhone"
-              width={690}
-              height={388}
+              width={704}
+              height={396}
               sizes="(max-width: 1024px) 100vw, 690px"
               loading="lazy"
               className="w-full sm:max-w-2xl lg:max-w-none lg:w-[690px] xl:w-[690px] h-auto object-contain object-bottom select-none drop-shadow-2xl relative z-10"
@@ -137,8 +137,8 @@ export default function EmailSubscribeSection({
               <Image
                 src="/togetherly/togetherly-logo-light.png"
                 alt="Togetherly"
-                width={133}
-                height={40}
+                width={150}
+                height={45}
                 loading="lazy"
                 className="h-8 sm:h-9 w-auto object-contain"
               />
