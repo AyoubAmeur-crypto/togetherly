@@ -225,8 +225,8 @@ export default function CouplesMoneyPlannerView() {
                 <Image
                   src="/togetherly/tablet.png"
                   alt="Togetherly Couples Money Planner tablet mockup in Google Sheets"
-                  width={800}
-                  height={444}
+                  width={900}
+                  height={500}
                   priority
                   sizes="(max-width: 1024px) 100vw, 800px"
                   className="w-full max-w-xl sm:max-w-2xl lg:max-w-3xl xl:max-w-4xl h-auto object-contain select-none shadow-none"
@@ -245,8 +245,8 @@ export default function CouplesMoneyPlannerView() {
               <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
-                width={147}
-                height={44}
+                width={150}
+                height={45}
                 loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto"
               />
@@ -308,8 +308,8 @@ export default function CouplesMoneyPlannerView() {
               <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
-                width={147}
-                height={44}
+                width={150}
+                height={45}
                 loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto mb-10"
               />
@@ -500,8 +500,8 @@ export default function CouplesMoneyPlannerView() {
                       <Image
                         src={togetherlyBrand.assets.logoPrimary}
                         alt="Togetherly"
-                        width={147}
-                        height={44}
+                        width={150}
+                        height={45}
                         loading="lazy"
                         className="h-10 sm:h-12 w-auto object-contain mx-auto"
                       />
@@ -676,8 +676,8 @@ export default function CouplesMoneyPlannerView() {
                   <Image
                     src={togetherlyBrand.assets.logoLight}
                     alt="Togetherly"
-                    width={133}
-                    height={40}
+                    width={150}
+                    height={45}
                     loading="lazy"
                     className="h-9 sm:h-10 w-auto object-contain mx-auto md:mx-0 shadow-none"
                   />
@@ -786,8 +786,8 @@ export default function CouplesMoneyPlannerView() {
               <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
-                width={147}
-                height={44}
+                width={150}
+                height={45}
                 loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto mb-10"
               />
@@ -850,8 +850,8 @@ export default function CouplesMoneyPlannerView() {
               <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
-                width={147}
-                height={44}
+                width={150}
+                height={45}
                 loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto mb-10"
               />
@@ -1090,8 +1090,8 @@ export default function CouplesMoneyPlannerView() {
               <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
-                width={147}
-                height={44}
+                width={150}
+                height={45}
                 loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto mb-10"
               />
@@ -1220,8 +1220,8 @@ export default function CouplesMoneyPlannerView() {
               <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
-                width={147}
-                height={44}
+                width={150}
+                height={45}
                 loading="lazy"
                 className="h-10 sm:h-11 w-auto object-contain mx-auto mb-10"
               />
@@ -1298,8 +1298,8 @@ export default function CouplesMoneyPlannerView() {
               <Image
                 src={togetherlyBrand.assets.logoLight}
                 alt="Togetherly"
-                width={147}
-                height={44}
+                width={150}
+                height={45}
                 loading="lazy"
                 className="h-10 sm:h-12 w-auto object-contain mx-auto mb-2"
               />

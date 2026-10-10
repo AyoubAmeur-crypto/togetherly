@@ -35,8 +35,8 @@ export default function TogetherlyFooter() {
               <Image
                 src={togetherlyBrand.assets.logoPrimary}
                 alt="Togetherly"
-                width={147}
-                height={44}
+                width={150}
+                height={45}
                 loading="lazy"
                 className="h-9 sm:h-11 w-auto object-contain"
               />

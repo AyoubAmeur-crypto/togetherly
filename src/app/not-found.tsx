@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Home, Calculator, BookOpen, FileSpreadsheet, ArrowRight, HelpCircle } from 'lucide-react';
+import { Home, Calculator, BookOpen, FileSpreadsheet, ArrowRight } from 'lucide-react';
 
 export default function NotFound() {
   return (

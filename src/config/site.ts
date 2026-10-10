@@ -21,7 +21,7 @@ export const SITE_DEFAULTS = {
   title: 'Togetherly — Money Made Simpler, Life More Together',
   titleTemplate: '%s | Togetherly',
   description:
-    'The complete 8-sheet Google Sheets financial planning system designed for couples. Track shared living costs, balance fair proportional splits, and achieve savings goals without tension.',
+    'Togetherly creates calm couples budgeting tools and Google Sheets templates to track shared expenses, automate fair bill splits, and build financial harmony.',
   ogImage: '/togetherly/togetherly.png',
   logoPrimary: '/togetherly/togetherly-logo-primary.png',
   supportEmail: 'support@gettogetherly.tech',

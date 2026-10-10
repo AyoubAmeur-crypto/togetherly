@@ -36,15 +36,16 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   const postUrl = absoluteUrl(`/blog/${post.slug}`);
   const ogImage = post.ogImage || '/togetherly/togetherly.png';
+  const pageTitle = post.metaTitle || post.title;
 
   return {
-    title: post.title,
+    title: pageTitle,
     description: post.description,
     alternates: {
       canonical: `/blog/${post.slug}`,
     },
     openGraph: {
-      title: `${post.title} | Togetherly Blog`,
+      title: `${pageTitle} | Togetherly Blog`,
       description: post.description,
       url: postUrl,
       siteName: 'Togetherly',
@@ -56,7 +57,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
+      title: pageTitle,
       description: post.description,
       images: [ogImage],
     },
@@ -156,7 +157,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#174F4A] tracking-tight leading-[1.15]">
-            {post.title}
+            {post.h1 || post.title}
           </h1>
 
           <p className="text-base sm:text-lg text-[#6F7F7C] leading-relaxed">

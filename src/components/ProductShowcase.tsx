@@ -115,7 +115,7 @@ export default function ProductShowcase() {
                 height={750}
                 sizes="(max-width: 1024px) 100vw, 900px"
                 loading="lazy"
-                className="w-full h-auto object-cover rounded-none"
+                className="w-full h-auto object-contain rounded-none"
               />
               <div className="absolute inset-0 bg-[#174F4A]/0 group-hover:bg-[#174F4A]/5 transition-colors flex items-center justify-center">
                 <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#174F4A] text-[#FAF6EF] text-xs font-medium px-3 py-1.5 rounded-none shadow-none flex items-center gap-1.5">
@@ -165,8 +165,8 @@ export default function ProductShowcase() {
             <div className="text-xs text-[#6F7F7C]">Private in Google Drive</div>
           </div>
           <div className="bg-[#FFFFFF] p-5 rounded-none border border-[#174F4A]/10 text-center space-y-1">
-            <div className="text-2xl font-extrabold text-[#174F4A]">zsh Subscriptions</div>
-            <div className="text-xs text-[#6F7F7C]">One-Time  Forever</div>
+            <div className="text-2xl font-extrabold text-[#174F4A]">$0 Subscriptions</div>
+            <div className="text-xs text-[#6F7F7C]">One-Time · Yours Forever</div>
           </div>
           <div className="bg-[#FFFFFF] p-5 rounded-none border border-[#174F4A]/10 text-center space-y-1">
             <div className="text-2xl font-extrabold text-[#174F4A]">1 Click</div>

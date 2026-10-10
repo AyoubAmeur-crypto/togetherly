@@ -540,8 +540,8 @@ export default function StoryView() {
                   <Image
                     src="/togetherly/tablet.png"
                     alt="Togetherly Couples Money Planner on Tablet"
-                    width={800}
-                    height={444}
+                    width={900}
+                    height={500}
                     sizes="(max-width: 1024px) 100vw, 800px"
                     loading="lazy"
                     className="w-full max-w-4xl lg:w-[800px] h-auto object-contain select-none drop-shadow-2xl transition-transform duration-300"

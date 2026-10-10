@@ -71,8 +71,8 @@ export default function TogetherlyNav() {
                 <Image
                   src={togetherlyBrand.assets.logoLight}
                   alt="Togetherly"
-                  width={133}
-                  height={40}
+                  width={150}
+                  height={45}
                   priority
                   className="h-9 sm:h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
                 />

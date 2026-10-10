@@ -124,8 +124,8 @@ export default function WhatsAppHelpCTA({
                 <Image
                   src={illustrationSrc}
                   alt="Togetherly WhatsApp Customer Support"
-                  width={480}
-                  height={319}
+                  width={512}
+                  height={340}
                   sizes="(max-width: 1024px) 100vw, 480px"
                   loading="lazy"
                   className="w-full h-auto object-contain select-none"

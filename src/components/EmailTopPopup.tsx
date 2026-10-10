@@ -522,7 +522,7 @@ export default function EmailTopPopup() {
                 alt="Togetherly"
                 className="h-6 sm:h-7 w-auto object-contain"
                 width={120}
-                height={28}
+                height={36}
               />
               <span className="inline-flex items-center bg-[#174F4A]/10 text-[#174F4A] px-2.5 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
                 FREE COUPLES STARTER KIT
@@ -661,8 +661,8 @@ export default function EmailTopPopup() {
                   alt="Togetherly Couples Money Planner on MacBook"
                   className="w-full h-auto object-contain select-none drop-shadow-md"
                   loading="lazy"
-                  width={210}
-                  height={130}
+                  width={216}
+                  height={120}
                 />
               </div>
             </div>
@@ -676,8 +676,8 @@ export default function EmailTopPopup() {
                 alt="Togetherly Couples Money Planner on MacBook"
                 className="w-full h-auto object-contain select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.32)] pointer-events-auto"
                 loading="lazy"
-                width={580}
-                height={360}
+                width={576}
+                height={320}
               />
             </div>
           </div>

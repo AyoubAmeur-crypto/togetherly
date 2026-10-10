@@ -3,7 +3,6 @@ import Link from 'next/link';
 import {
   Calculator,
   ArrowRight,
-  CheckCircle2,
   Scale,
   Percent,
   FileSpreadsheet,
@@ -14,25 +13,29 @@ import FairSplitCalculator from '@/components/FairSplitCalculator';
 import WhatsAppHelpCTA from '@/components/WhatsAppHelpCTA';
 import EmailCapture from '@/components/EmailCapture';
 import TrackedProductLink from '@/components/TrackedProductLink';
-
-
 import { absoluteUrl } from '@/config/site';
 import { getCalculatorWebApplicationSchema, getBreadcrumbListSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
-  title: 'Couples Expense Split Calculator (50/50 vs. Proportional)',
+  title: 'Split Bills Based on Income Calculator (Free)',
   description:
-    'Free couples expense split calculator. Compare equal 50/50 splitting against income-weighted proportional contributions toward shared living costs, rent, and bills.',
+    "Calculate how to split shared bills based on each partner's income. Enter your incomes and shared expenses to see each person's proportional contribution.",
   alternates: {
     canonical: '/tools/couples-expense-split-calculator',
   },
   openGraph: {
-    title: 'Couples Expense Split Calculator (50/50 vs. Proportional) | Togetherly',
+    title: 'Split Bills Based on Income Calculator (Free) | Togetherly',
     description:
-      'Calculate fair contributions based on each partner’s income. Free interactive calculator comparing 50/50 vs. proportional splitting with zero sign-up.',
+      "Calculate how to split shared bills based on each partner's income. Enter your incomes and shared expenses to see each person's proportional contribution.",
     url: absoluteUrl('/tools/couples-expense-split-calculator'),
     siteName: 'Togetherly',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Split Bills Based on Income Calculator (Free) | Togetherly',
+    description:
+      "Calculate how to split shared bills based on each partner's income. Enter your incomes and shared expenses to see each person's proportional contribution.",
   },
 };
 
@@ -41,7 +44,7 @@ export default function CouplesExpenseSplitCalculatorPage() {
   const breadcrumbsJsonLd = getBreadcrumbListSchema([
     { name: 'Home', path: '/' },
     { name: 'Tools', path: '/tools' },
-    { name: 'Couples Expense Split Calculator', path: '/tools/couples-expense-split-calculator' },
+    { name: 'Split Bills Based on Income Calculator', path: '/tools/couples-expense-split-calculator' },
   ]);
 
   return (
@@ -56,7 +59,7 @@ export default function CouplesExpenseSplitCalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#6F7F7C]">
           <Link href="/" className="hover:text-[#174F4A] transition-colors">
@@ -67,161 +70,322 @@ export default function CouplesExpenseSplitCalculatorPage() {
             Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-[#6F7F7C]/60" />
-          <span className="text-[#174F4A] font-semibold">Expense Split Calculator</span>
+          <span className="text-[#174F4A] font-semibold">Split Bills Based on Income Calculator</span>
         </nav>
 
-        {/* Page Header */}
+        {/* Page Header (Above the fold) */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-[#2C7A73]/10 text-xs font-bold text-[#174F4A] uppercase tracking-wider">
             <Calculator className="w-3.5 h-3.5 text-[#2C7A73]" />
-            <span>Free Interactive Calculator</span>
+            <span>Free Interactive Calculator · No Sign-Up Required</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#174F4A] tracking-tight leading-tight">
-            Couples Expense Split Calculator
+            Split Bills Based on Income Calculator
           </h1>
 
           <p className="text-base sm:text-lg text-[#6F7F7C] leading-relaxed max-w-2xl mx-auto">
-            Compare a traditional 50/50 split against an income-weighted proportional fair split.
-            Enter your monthly net take-home incomes and shared household expenses below.
+            Calculate how to split shared household bills proportionally based on each partner’s take-home pay, or compare with a traditional 50/50 split. Enter your monthly incomes and shared expenses below.
           </p>
         </header>
 
-        {/* Interactive Calculator Engine (Single card, full width) */}
+        {/* Interactive Calculator Engine (Prominent, High on page) */}
         <FairSplitCalculator hideHeading={true} embedded={true} />
 
-        {/* Educational Content Sections */}
-        <div className="space-y-12 max-w-6xl mx-auto pt-6 text-left">
-          {/* Section 1: Overview of Splitting Approaches */}
+        {/* Supporting Editorial Content Underneath the Calculator */}
+        <div className="space-y-12 max-w-4xl mx-auto pt-6 text-left">
+          
+          {/* Section 1: How the Calculator Works */}
           <section className="space-y-4">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#174F4A] tracking-tight">
-              How expense splitting works for couples
+              How the Split Bills Based on Income Calculator Works
             </h2>
             <p className="text-sm sm:text-base text-[#6F7F7C] leading-relaxed">
-              When two people share a household, deciding how to fund rent, groceries, utilities, and dining is one of the most frequent financial conversations. Couples typically evaluate two main approaches:
+              When couples earn different salaries, splitting bills equally down the middle often places a heavy burden on the lower-earning partner while the higher earner saves easily. This calculator uses an <strong>income-weighted proportional formula</strong> to balance your shared costs.
+            </p>
+            <p className="text-sm sm:text-base text-[#6F7F7C] leading-relaxed">
+              Instead of paying arbitrary dollar figures, each partner contributes a percentage equal to their share of total household take-home income. If you earn 60% of your household’s combined earnings, you cover 60% of the rent, utilities, and joint groceries. Both partners contribute the exact same share of their paycheck toward home life, preserving an equitable share of personal income for individual savings and spending.
+            </p>
+          </section>
+
+          {/* Section 2: How the Calculation Is Made */}
+          <section className="space-y-4 border-t border-[#174F4A]/10 pt-8">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#174F4A] tracking-tight">
+              How the Calculation Is Made
+            </h2>
+            <p className="text-sm sm:text-base text-[#6F7F7C] leading-relaxed">
+              The calculation runs automatically in three transparent steps using your take-home figures:
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
-              <div className="bg-[#FFFFFF] p-6 border border-[#174F4A]/10 space-y-2.5">
-                <div className="flex items-center gap-2 text-sm font-bold text-[#174F4A]">
-                  <Scale className="w-4 h-4 text-[#2C7A73]" />
-                  <span>The 50/50 Equal Split</span>
-                </div>
-                <p className="text-xs text-[#6F7F7C] leading-relaxed">
-                  Both partners contribute exactly half of every shared obligation, regardless of individual earnings.
-                </p>
-                <div className="text-[11px] text-[#2C7A73] font-semibold pt-1">
-                  Works well when: Incomes are similar and discretionary spending power remains balanced.
-                </div>
+            <div className="bg-[#174F4A] text-[#FAF6EF] p-5 sm:p-6 font-mono text-xs sm:text-sm space-y-3 rounded-none">
+              <div>
+                <p className="text-[#91B7A0] font-bold">Step 1: Combined Household Net Income</p>
+                <p className="pl-3">Combined Income = Partner A Income + Partner B Income</p>
               </div>
-
-              <div className="bg-[#FFFFFF] p-6 border border-[#174F4A]/10 space-y-2.5">
-                <div className="flex items-center gap-2 text-sm font-bold text-[#174F4A]">
-                  <Percent className="w-4 h-4 text-[#F29B7F]" />
-                  <span>The Proportional (Income-Based) Split</span>
-                </div>
-                <p className="text-xs text-[#6F7F7C] leading-relaxed">
-                  Contributions are weighted proportionally to what each partner takes home (for example, 60/40 or 55/45).
-                </p>
-                <div className="text-[11px] text-[#F29B7F] font-semibold pt-1">
-                  Works well when: One partner earns significantly more, ensuring both maintain equitable fun money.
-                </div>
+              <div>
+                <p className="text-[#91B7A0] font-bold">Step 2: Individual Percentage Shares</p>
+                <p className="pl-3">Partner A Share % = (Partner A Income ÷ Combined Income) × 100</p>
+                <p className="pl-3">Partner B Share % = (Partner B Income ÷ Combined Income) × 100</p>
+              </div>
+              <div>
+                <p className="text-[#91B7A0] font-bold">Step 3: Monthly Dollar Contributions</p>
+                <p className="pl-3">Partner A Contribution = Shared Monthly Bills × (Partner A Share % ÷ 100)</p>
+                <p className="pl-3">Partner B Contribution = Shared Monthly Bills × (Partner B Share % ÷ 100)</p>
               </div>
             </div>
           </section>
 
-          {/* Section 2: Mathematical Formula */}
+          {/* Section 3: Worked Example */}
           <section className="space-y-4 border-t border-[#174F4A]/10 pt-8">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#174F4A] tracking-tight">
-              The math behind proportional splitting
+              Example: $6,000 vs $4,000 Income
             </h2>
             <p className="text-sm sm:text-base text-[#6F7F7C] leading-relaxed">
-              Proportional splitting calculates each partner’s contribution percentage based on their share of the total household net income:
+              Consider a couple living together with a moderate income disparity and $3,000 in monthly shared expenses:
             </p>
 
-            <div className="bg-[#174F4A] text-[#FAF6EF] p-5 sm:p-6 font-mono text-xs sm:text-sm space-y-2">
-              <p className="text-[#91B7A0] font-bold">Step 1: Total Household Net Income</p>
-              <p>Total Income = Partner A Income + Partner B Income</p>
-              <p className="text-[#91B7A0] font-bold pt-2">Step 2: Individual Percentage Shares</p>
-              <p>Partner A Share % = Partner A Income / Total Income</p>
-              <p>Partner B Share % = Partner B Income / Total Income</p>
-              <p className="text-[#91B7A0] font-bold pt-2">Step 3: Dollar Contributions</p>
-              <p>Partner A Contribution = Shared Expenses × Partner A Share %</p>
-              <p>Partner B Contribution = Shared Expenses × Partner B Share %</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+              <div className="bg-[#FFFFFF] p-5 border border-[#174F4A]/10 space-y-1">
+                <span className="text-[11px] uppercase tracking-wider text-[#6F7F7C] font-semibold">Partner A</span>
+                <p className="text-xl font-extrabold text-[#174F4A]">$6,000 / mo</p>
+                <p className="text-xs text-[#2C7A73] font-semibold">60% of combined income</p>
+                <p className="text-xs text-[#6F7F7C] pt-2 border-t border-[#174F4A]/10">Pays $1,800/mo (30% of pay)</p>
+              </div>
+
+              <div className="bg-[#FFFFFF] p-5 border border-[#174F4A]/10 space-y-1">
+                <span className="text-[11px] uppercase tracking-wider text-[#6F7F7C] font-semibold">Partner B</span>
+                <p className="text-xl font-extrabold text-[#174F4A]">$4,000 / mo</p>
+                <p className="text-xs text-[#2C7A73] font-semibold">40% of combined income</p>
+                <p className="text-xs text-[#6F7F7C] pt-2 border-t border-[#174F4A]/10">Pays $1,200/mo (30% of pay)</p>
+              </div>
+
+              <div className="bg-[#FAF6EF] p-5 border border-[#174F4A]/15 space-y-1">
+                <span className="text-[11px] uppercase tracking-wider text-[#6F7F7C] font-semibold">Shared Bills</span>
+                <p className="text-xl font-extrabold text-[#174F4A]">$3,000 / mo</p>
+                <p className="text-xs text-[#6F7F7C]">100% funded equitably</p>
+                <p className="text-xs text-[#2C7A73] font-semibold pt-2 border-t border-[#174F4A]/10">Both keep 70% of pay</p>
+              </div>
             </div>
 
             <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed pt-1">
-              For example, if Partner A earns $4,800 (60%) and Partner B earns $3,200 (40%), with $3,200 in shared monthly expenses, Partner A covers $1,920 and Partner B covers $1,280.
+              Notice what happens under this arrangement: both partners dedicate exactly 30% of their net pay toward household costs. Partner A retains $4,200 (70%) and Partner B retains $2,800 (70%) for personal savings, retirement funds, and solo spending.
             </p>
           </section>
 
-          {/* Section 3: When couples choose different approaches */}
+          {/* Section 4: 50/50 vs Proportional */}
           <section className="space-y-4 border-t border-[#174F4A]/10 pt-8">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#174F4A] tracking-tight">
-              Choosing the right system for your relationship
+              50/50 vs Proportional Bill Splitting
             </h2>
             <p className="text-sm sm:text-base text-[#6F7F7C] leading-relaxed">
-              No single budgeting method is universally right for every couple. Healthy financial partnerships often evolve through different stages:
+              Couples generally choose between two primary approaches. Neither is universally right for every relationship; they serve different income balances:
             </p>
 
-            <ul className="space-y-3 text-xs sm:text-sm text-[#243B38]">
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#2C7A73] shrink-0 mt-0.5" />
-                <span>
-                  <strong>When incomes are similar:</strong> A 50/50 split is intuitive, straightforward, and avoids regular percentage adjustments.
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#2C7A73] shrink-0 mt-0.5" />
-                <span>
-                  <strong>When incomes differ significantly:</strong> Proportional splitting protects the lower-earning partner from feeling financially stretched or guilty, while allowing the higher-earning partner to contribute proportionally without feeling taken advantage of.
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#2C7A73] shrink-0 mt-0.5" />
-                <span>
-                  <strong>The 3-Pot hybrid:</strong> Many couples pair proportional splitting with personal accounts: joint shared expenses are funded proportionally, while personal fun money remains completely separate.
-                </span>
-              </li>
-            </ul>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+              <div className="bg-[#FFFFFF] p-6 border border-[#174F4A]/10 space-y-3">
+                <div className="flex items-center gap-2 text-base font-bold text-[#174F4A]">
+                  <Scale className="w-4 h-4 text-[#2C7A73]" />
+                  <span>The 50/50 Equal Split</span>
+                </div>
+                <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
+                  Both partners pay exactly half of every shared obligation ($1,500 each in the example above).
+                </p>
+                <div className="text-xs text-[#2C7A73] font-semibold pt-1">
+                  Works best when: Incomes are virtually identical (within 10-15%) and discretionary cash remains balanced.
+                </div>
+              </div>
+
+              <div className="bg-[#FFFFFF] p-6 border border-[#174F4A]/10 space-y-3">
+                <div className="flex items-center gap-2 text-base font-bold text-[#174F4A]">
+                  <Percent className="w-4 h-4 text-[#F29B7F]" />
+                  <span>The Proportional Split</span>
+                </div>
+                <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
+                  Each partner pays based on their percentage of combined earnings ($1,800 vs $1,200 in the example).
+                </p>
+                <div className="text-xs text-[#F29B7F] font-semibold pt-1">
+                  Works best when: Incomes differ noticeably, ensuring the lower earner is not burdened with a 38%+ drain on their paycheck.
+                </div>
+              </div>
+            </div>
+
+            <p className="text-xs sm:text-sm text-[#6F7F7C] pt-2">
+              For a detailed comparison of psychological tradeoffs, read our analysis of{' '}
+              <Link href="/blog/50-50-vs-proportional-expense-splitting" className="text-[#2C7A73] font-bold underline hover:text-[#174F4A]">
+                50/50 vs proportional expense splitting
+              </Link>.
+            </p>
           </section>
 
-          {/* Section 4: Contextual Blog Link */}
-          <section className="bg-[#FFFFFF] border border-[#174F4A]/15 p-6 space-y-2.5">
+          {/* Section 5: Gross vs Net Income */}
+          <section className="space-y-4 border-t border-[#174F4A]/10 pt-8">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#174F4A] tracking-tight">
+              Should You Enter Gross or Net Income?
+            </h2>
+            <p className="text-sm sm:text-base text-[#6F7F7C] leading-relaxed">
+              <strong>Enter net take-home pay.</strong> Net pay represents the actual cash deposited into your checking accounts each month after federal, state, and local payroll taxes, mandatory pension contributions, and healthcare deductions.
+            </p>
+            <p className="text-sm sm:text-base text-[#6F7F7C] leading-relaxed">
+              Because you cannot pay rent or electricity with pre-tax withholdings, net pay provides a realistic reflection of your actual household purchasing power. If one partner has unusually large voluntary deductions (such as aggressive optional 401(k) contributions), you can agree to calculate based on take-home pay before those voluntary elections.
+            </p>
+          </section>
+
+          {/* Section 6: What Expenses Should You Include? */}
+          <section className="space-y-4 border-t border-[#174F4A]/10 pt-8">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#174F4A] tracking-tight">
+              What Expenses Should You Include?
+            </h2>
+            <p className="text-sm sm:text-base text-[#6F7F7C] leading-relaxed">
+              When entering your monthly shared bills into the calculator, include costs that benefit both partners:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+              <div className="bg-[#FFFFFF] p-5 border border-[#174F4A]/10 space-y-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#2C7A73] block">Include in Shared Bills:</span>
+                <ul className="text-xs text-[#243B38] space-y-1.5 list-disc list-inside">
+                  <li>Rent or mortgage payment</li>
+                  <li>Utilities (power, water, gas, internet)</li>
+                  <li>Joint groceries & household supplies</li>
+                  <li>Shared streaming services & subscriptions</li>
+                  <li>Joint pet care, food, and vet bills</li>
+                </ul>
+              </div>
+
+              <div className="bg-[#FFFFFF] p-5 border border-[#174F4A]/10 space-y-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#E57373] block">Keep as Individual Costs:</span>
+                <ul className="text-xs text-[#243B38] space-y-1.5 list-disc list-inside">
+                  <li>Personal student loans & credit card debt</li>
+                  <li>Individual clothing and personal grooming</li>
+                  <li>Solo hobbies and individual tech purchases</li>
+                  <li>Solo dining out with coworkers or friends</li>
+                  <li>Personal vehicle payments (unless jointly shared)</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Section 7: Prominent Contextual Bridge to the Educational Guide */}
+          <section className="bg-[#FFFFFF] border-2 border-[#174F4A]/20 p-6 sm:p-8 space-y-3">
             <div className="flex items-center gap-2 text-xs font-bold text-[#2C7A73] uppercase tracking-wider">
               <BookOpen className="w-4 h-4" />
-              <span>Explore Deeper</span>
+              <span>Complete In-Depth Guide</span>
             </div>
-            <h3 className="text-base font-bold text-[#174F4A]">
-              Want more frameworks on couples money management?
+            <h3 className="text-lg sm:text-xl font-extrabold text-[#174F4A]">
+              Want the full step-by-step breakdown with banking setups?
             </h3>
-            <p className="text-xs sm:text-sm text-[#6F7F7C]">
-              Read our editorial essays on running a 20-minute monthly money date, setting shared savings milestones, and building financial intimacy without friction.
+            <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
+              Our comprehensive guide explains how to set up the 3-account banking system, navigate changes in income, discuss debt, and align your financial boundaries without tension.
             </p>
-            <div className="pt-1">
+            <div className="pt-2">
               <Link
-                href="/blog"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#174F4A] hover:text-[#2C7A73] transition-colors"
+                href="/blog/split-bills-based-on-income"
+                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#174F4A] hover:text-[#2C7A73] transition-colors"
               >
-                <span>Browse Togetherly Blog</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>Read our complete guide to splitting bills based on income</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </section>
 
-          {/* Section 5: Contextual WhatsApp Help CTA */}
+          {/* Section 8: Related Cluster Links */}
+          <section className="space-y-4 border-t border-[#174F4A]/10 pt-8">
+            <h3 className="text-lg font-bold text-[#174F4A]">
+              More Guides for Couples Managing Shared Money:
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Link
+                href="/blog/50-50-vs-proportional-expense-splitting"
+                className="p-4 bg-[#FFFFFF] border border-[#174F4A]/10 hover:border-[#174F4A]/30 transition-all text-xs space-y-1 block"
+              >
+                <span className="font-bold text-[#174F4A] block">50/50 vs Proportional Splitting</span>
+                <span className="text-[#6F7F7C]">Understand the psychological and financial tradeoffs.</span>
+              </Link>
+
+              <Link
+                href="/blog/how-should-couples-split-expenses"
+                className="p-4 bg-[#FFFFFF] border border-[#174F4A]/10 hover:border-[#174F4A]/30 transition-all text-xs space-y-1 block"
+              >
+                <span className="font-bold text-[#174F4A] block">4 Ways Couples Split Expenses</span>
+                <span className="text-[#6F7F7C]">Explore equal, proportional, hybrid, and pooled systems.</span>
+              </Link>
+
+              <Link
+                href="/blog/how-to-budget-as-a-couple"
+                className="p-4 bg-[#FFFFFF] border border-[#174F4A]/10 hover:border-[#174F4A]/30 transition-all text-xs space-y-1 block"
+              >
+                <span className="font-bold text-[#174F4A] block">How to Budget as a Couple</span>
+                <span className="text-[#6F7F7C]">Step-by-step framework to budget together without stress.</span>
+              </Link>
+            </div>
+          </section>
+
+          {/* Section 9: Frequently Asked Questions */}
+          <section className="space-y-6 border-t border-[#174F4A]/10 pt-8">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#174F4A] tracking-tight">
+              Frequently Asked Questions
+            </h2>
+
+            <div className="space-y-4">
+              <div className="bg-[#FFFFFF] p-5 border border-[#174F4A]/10 space-y-2">
+                <h3 className="text-sm font-bold text-[#174F4A]">
+                  How does this calculator split bills based on income?
+                </h3>
+                <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
+                  The calculator sums both partners’ take-home pay to find total household income, calculates each person’s percentage share of that total, and multiplies each percentage by your total shared monthly expenses.
+                </p>
+              </div>
+
+              <div className="bg-[#FFFFFF] p-5 border border-[#174F4A]/10 space-y-2">
+                <h3 className="text-sm font-bold text-[#174F4A]">
+                  Should I enter gross or net take-home pay?
+                </h3>
+                <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
+                  Net take-home pay is recommended. Taxes, healthcare premiums, and required payroll deductions cannot be used to pay household bills, so take-home pay gives an accurate picture of spendable money.
+                </p>
+              </div>
+
+              <div className="bg-[#FFFFFF] p-5 border border-[#174F4A]/10 space-y-2">
+                <h3 className="text-sm font-bold text-[#174F4A]">
+                  What is the difference between 50/50 and proportional splitting?
+                </h3>
+                <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
+                  In a 50/50 split, each partner pays the exact same dollar amount regardless of salary. In a proportional split, each partner contributes in direct ratio to what they earn, so both partners sacrifice the same proportion of their paycheck.
+                </p>
+              </div>
+
+              <div className="bg-[#FFFFFF] p-5 border border-[#174F4A]/10 space-y-2">
+                <h3 className="text-sm font-bold text-[#174F4A]">
+                  Can we recalculate when one partner’s salary changes?
+                </h3>
+                <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
+                  Yes. Whenever either partner experiences a promotion, raise, job change, or period of unpaid leave, enter the updated take-home numbers to re-balance your contributions.
+                </p>
+              </div>
+
+              <div className="bg-[#FFFFFF] p-5 border border-[#174F4A]/10 space-y-2">
+                <h3 className="text-sm font-bold text-[#174F4A]">
+                  Is my financial data saved or transmitted anywhere?
+                </h3>
+                <p className="text-xs sm:text-sm text-[#6F7F7C] leading-relaxed">
+                  No. All calculations run 100% locally in your browser. We never collect, store, or transmit your income figures or expenses.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Section 10: WhatsApp Help CTA */}
           <WhatsAppHelpCTA
             topic="couples_expense_split_calculator"
             headline="Have a question about your result?"
             subtext="Ask Togetherly — we're happy to help."
-            message="Hi Togetherly! I was using your Couples Expense Split Calculator and I have a question about our situation."
+            message="Hi Togetherly! I was using your Split Bills Based on Income Calculator and I have a question about our situation."
             sourcePage="/tools/couples-expense-split-calculator"
             contentCluster="Finance Tools / Calculators"
             ctaLocation="calculator_middle"
             buttonText="Ask on WhatsApp"
           />
 
-          {/* Section 6: Natural Commercial Product CTA */}
+          {/* Section 11: Product CTA: Couples Money Planner */}
           <section className="bg-[#174F4A] text-[#FAF6EF] p-8 sm:p-10 space-y-5 rounded-none relative overflow-hidden">
             <div
               className="absolute inset-0 w-full h-full pointer-events-none select-none mix-blend-overlay opacity-30"
@@ -264,7 +428,7 @@ export default function CouplesExpenseSplitCalculatorPage() {
             </div>
           </section>
 
-          {/* Section 7: Email Notification Capture */}
+          {/* Section 12: Email Notification Capture */}
           <EmailCapture
             sourcePage="/tools/couples-expense-split-calculator"
             contentCluster="Finance Tools / Calculators"
