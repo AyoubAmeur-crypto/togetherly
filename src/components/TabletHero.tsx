@@ -14,6 +14,7 @@ import {
   Smartphone
 } from 'lucide-react';
 import { TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
+import { trackProductCtaClick } from '../lib/analytics';
 
 export default function TabletHero() {
   const [zoomOpen, setZoomOpen] = useState(false);
@@ -88,6 +89,13 @@ export default function TabletHero() {
                   href={TOGETHERLY_GOOGLE_SHEET_COPY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackProductCtaClick({
+                      product_slug: 'couples-money-planner',
+                      cta_name: 'tablet_hero_buy_planner',
+                      destination: TOGETHERLY_GOOGLE_SHEET_COPY_URL,
+                    })
+                  }
                   className="inline-flex items-center justify-center gap-2 bg-[#174F4A] hover:bg-[#0F3834] text-[#FAF6EF] text-sm sm:text-base font-extrabold px-8 py-4 rounded-none transition-colors cursor-pointer shadow-sm tracking-tight"
                 >
                   <span>Buy Couples Money Planner ($19)</span>

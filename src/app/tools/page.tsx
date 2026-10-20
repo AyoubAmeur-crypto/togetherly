@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { Calculator, ArrowRight, Scale, Percent } from 'lucide-react';
+import TrackedCalculatorLink from '@/components/TrackedCalculatorLink';
+import TrackedProductLink from '@/components/TrackedProductLink';
 
 import { absoluteUrl } from '@/config/site';
 import { getBreadcrumbListSchema } from '@/lib/schema';
@@ -68,12 +69,14 @@ export default function ToolsDirectoryPage() {
               </div>
 
               <h2 className="text-2xl font-extrabold text-[#174F4A] leading-snug">
-                <Link
+                <TrackedCalculatorLink
                   href="/tools/couples-expense-split-calculator"
+                  sourcePage="/tools"
+                  ctaName="tools_directory_title"
                   className="hover:text-[#2C7A73] transition-colors"
                 >
                   Split Bills Based on Income Calculator
-                </Link>
+                </TrackedCalculatorLink>
               </h2>
 
               <p className="text-sm text-[#6F7F7C] leading-relaxed">
@@ -93,13 +96,15 @@ export default function ToolsDirectoryPage() {
             </div>
 
             <div className="pt-4 border-t border-[#174F4A]/10 flex items-center justify-between">
-              <Link
+              <TrackedCalculatorLink
                 href="/tools/couples-expense-split-calculator"
+                sourcePage="/tools"
+                ctaName="tools_directory_button"
                 className="inline-flex items-center gap-2 bg-[#174F4A] hover:bg-[#0F3834] text-[#FAF6EF] text-xs font-bold px-5 py-2.5 rounded-none transition-colors cursor-pointer"
               >
                 <span>Launch Calculator</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              </TrackedCalculatorLink>
             </div>
           </div>
 
@@ -125,12 +130,15 @@ export default function ToolsDirectoryPage() {
               </div>
 
               <h2 className="text-2xl font-extrabold text-[#FAF6EF] leading-snug">
-                <Link
+                <TrackedProductLink
                   href="/products/couples-money-planner"
+                  sourceType="general"
+                  sourcePage="/tools"
+                  ctaLocation="tools_directory_product_title"
                   className="hover:text-[#F29B7F] transition-colors"
                 >
                   Couples Money Planner
-                </Link>
+                </TrackedProductLink>
               </h2>
 
               <p className="text-sm text-[#FAF6EF]/85 leading-relaxed">
@@ -139,13 +147,16 @@ export default function ToolsDirectoryPage() {
             </div>
 
             <div className="relative z-10 pt-4 border-t border-[#FAF6EF]/20 flex items-center justify-between">
-              <Link
+              <TrackedProductLink
                 href="/products/couples-money-planner"
+                sourceType="general"
+                sourcePage="/tools"
+                ctaLocation="tools_directory_product_button"
                 className="inline-flex items-center gap-2 bg-[#FAF6EF] hover:bg-white text-[#174F4A] text-xs font-extrabold px-5 py-2.5 rounded-none transition-colors cursor-pointer shadow-sm tracking-tight"
               >
                 <span>View Full System</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              </TrackedProductLink>
             </div>
           </div>
         </div>

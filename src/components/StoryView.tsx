@@ -20,6 +20,7 @@ import FloatingWhatsAppCTA from './FloatingWhatsAppCTA';
 import EmailSubscribeSection from './EmailSubscribeSection';
 import TestimonialSection from './TestimonialSection';
 import { togetherlyBrand, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
+import { trackProductCtaClick } from '../lib/analytics';
 
 export default function StoryView() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
@@ -73,6 +74,13 @@ export default function StoryView() {
                       href={TOGETHERLY_GOOGLE_SHEET_COPY_URL}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() =>
+                        trackProductCtaClick({
+                          product_slug: 'couples-money-planner',
+                          cta_name: 'story_hero_buy_planner',
+                          destination: TOGETHERLY_GOOGLE_SHEET_COPY_URL,
+                        })
+                      }
                       className="inline-flex items-center justify-center gap-2 bg-[#174F4A] hover:bg-[#0F3834] text-[#FAF6EF] text-sm sm:text-base font-extrabold px-8 py-4 rounded-none transition-colors cursor-pointer shadow-sm tracking-tight"
                     >
                       <span>Buy Couples Money Planner ($19)</span>
@@ -388,6 +396,13 @@ export default function StoryView() {
                   href={TOGETHERLY_GOOGLE_SHEET_COPY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackProductCtaClick({
+                      product_slug: 'couples-money-planner',
+                      cta_name: 'story_love_buy_planner',
+                      destination: TOGETHERLY_GOOGLE_SHEET_COPY_URL,
+                    })
+                  }
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#174F4A] hover:bg-[#0F3834] text-[#FAF6EF] text-sm sm:text-base font-extrabold px-8 py-4 rounded-none transition-colors cursor-pointer tracking-tight shadow-sm"
                 >
                   <span>Buy Couples Money Planner ($19)</span>
@@ -451,6 +466,13 @@ export default function StoryView() {
                 href={TOGETHERLY_GOOGLE_SHEET_COPY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackProductCtaClick({
+                    product_slug: 'couples-money-planner',
+                    cta_name: 'story_green_banner_buy_planner',
+                    destination: TOGETHERLY_GOOGLE_SHEET_COPY_URL,
+                  })
+                }
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FAF6EF] hover:bg-white text-[#174F4A] text-base sm:text-lg font-extrabold px-10 py-4 rounded-none transition-colors cursor-pointer shadow-md tracking-tight"
               >
                 <span>Buy Couples Money Planner ($19)</span>
@@ -578,6 +600,13 @@ export default function StoryView() {
                       href={TOGETHERLY_GOOGLE_SHEET_COPY_URL}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() =>
+                        trackProductCtaClick({
+                          product_slug: 'couples-money-planner',
+                          cta_name: 'story_bottom_teaser_buy_planner',
+                          destination: TOGETHERLY_GOOGLE_SHEET_COPY_URL,
+                        })
+                      }
                       className="inline-flex items-center justify-center gap-2 bg-[#174F4A] hover:bg-[#0F3834] text-[#FAF6EF] text-sm sm:text-base font-extrabold px-8 py-4 rounded-none transition-colors cursor-pointer shadow-sm tracking-tight"
                     >
                       <span>Buy Couples Money Planner ($19)</span>

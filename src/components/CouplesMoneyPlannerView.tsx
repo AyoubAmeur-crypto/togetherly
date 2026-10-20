@@ -36,7 +36,7 @@ import {
   togetherlyBrand,
   TOGETHERLY_CHECKOUT_URL
 } from '../config/productConfig';
-import { trackProductView, trackCheckoutClick } from '../lib/analytics';
+import { trackProductView, trackProductCtaClick } from '../lib/analytics';
 import { getCouplesMoneyPlannerProductSchema, getBreadcrumbListSchema } from '@/lib/schema';
 
 export default function CouplesMoneyPlannerView() {
@@ -45,21 +45,23 @@ export default function CouplesMoneyPlannerView() {
 
   const showcaseContentRef = useRef<HTMLDivElement>(null);
   const prevTabRef = useRef(activeTab);
+  const hasTrackedView = useRef(false);
 
   useEffect(() => {
-    trackProductView({
-      product: 'Togetherly Couples Money Planner',
-      price: 19,
-      currency: 'USD',
-    });
+    if (!hasTrackedView.current) {
+      hasTrackedView.current = true;
+      trackProductView({
+        product_slug: 'couples-money-planner',
+        product_name: 'Togetherly Couples Money Planner',
+      });
+    }
   }, []);
 
   const handleCheckoutClick = (ctaLocation: string) => {
-    trackCheckoutClick({
-      product: 'Togetherly Couples Money Planner',
-      price: 19,
-      currency: 'USD',
-      cta_location: ctaLocation,
+    trackProductCtaClick({
+      product_slug: 'couples-money-planner',
+      cta_name: ctaLocation,
+      destination: TOGETHERLY_CHECKOUT_URL,
     });
   };
 

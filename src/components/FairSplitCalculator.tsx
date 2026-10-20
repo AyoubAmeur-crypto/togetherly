@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { Lightbulb, AlertTriangle } from 'lucide-react';
-import { trackCalculatorUse } from '@/lib/analytics';
+import { trackCalculatorUsed } from '@/lib/analytics';
 
 export default function FairSplitCalculator({
   embedded = false,
@@ -18,18 +18,26 @@ export default function FairSplitCalculator({
 
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  const reportUsage = (method = splitMethod, action = 'adjust_inputs') => {
+  const reportUsage = (method = splitMethod) => {
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
     debounceTimeout.current = setTimeout(() => {
-      trackCalculatorUse({ split_method: method, action });
+      trackCalculatorUsed({
+        calculator_type: 'couples_expense_split',
+        page_path: typeof window !== 'undefined' ? window.location.pathname : '/tools/couples-expense-split-calculator',
+        split_method: method,
+      });
     }, 800);
   };
 
   const handleMethodChange = (method: 'proportional' | 'fiftyFifty') => {
     setSplitMethod(method);
-    trackCalculatorUse({ split_method: method, action: 'toggle_method' });
+    trackCalculatorUsed({
+      calculator_type: 'couples_expense_split',
+      page_path: typeof window !== 'undefined' ? window.location.pathname : '/tools/couples-expense-split-calculator',
+      split_method: method,
+    });
   };
 
   const totalIncome = Math.max(1, partnerAIncome + partnerBIncome);

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { togetherlyBrand, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
-import { trackCheckoutClick } from '@/lib/analytics';
+import { trackProductCtaClick } from '@/lib/analytics';
 import EmailTopPopup from './EmailTopPopup';
 
 export default function TogetherlyNav() {
@@ -45,11 +45,10 @@ export default function TogetherlyNav() {
   const isBlog = pathname === '/blog' || pathname.startsWith('/blog');
 
   const handleCheckoutClick = (location: string) => {
-    trackCheckoutClick({
-      product: 'couples_money_planner',
-      price: 19,
-      currency: 'USD',
-      cta_location: location,
+    trackProductCtaClick({
+      product_slug: 'couples-money-planner',
+      cta_name: `nav_${location}`,
+      destination: TOGETHERLY_GOOGLE_SHEET_COPY_URL,
     });
   };
 

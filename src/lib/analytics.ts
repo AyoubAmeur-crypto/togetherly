@@ -1,308 +1,423 @@
 /**
  * Analytics abstraction for Togetherly
- * Provides lightweight tracking for core commercial events without large third-party dependencies.
- * Fails safely if no analytics provider is active.
+ * 
+ * Clean, safe Google Tag Manager / dataLayer event dispatcher.
+ * Architecture: Website -> GTM (GTM-KQLLHR2M) -> GA4 (G-XBK3SQZEQ1).
+ * 
+ * Safety & Privacy Principles:
+ * - Strictly SSR-safe (never accesses window during server rendering).
+ * - TypeScript-safe with strict schemas for every business event.
+ * - Fails silently and gracefully if dataLayer or GTM is not present.
+ * - Strictly prohibits PII (names, email addresses, phone numbers, IP addresses).
+ * - Strictly prohibits sensitive financial data (salaries, incomes, bill amounts, account balances).
  */
 
-export interface ProductViewProperties {
-  product: string;
-  price: number;
-  currency: string;
+// ============================================================================
+// Core Business Event Interfaces
+// ============================================================================
+
+/**
+ * Event: calculator_used
+ * Fired when the user interacts with or calculates results in the bill-splitting calculator.
+ * NEVER include incomes, expenses, or exact financial figures.
+ */
+export interface CalculatorUsedParameters {
+  calculator_type: string;
+  page_path: string;
+  split_method?: 'proportional' | 'fiftyFifty' | string;
 }
 
-export interface CheckoutClickProperties {
-  product: string;
-  price: number;
-  currency: string;
-  cta_location: 'hero' | 'middle' | 'final' | 'article' | 'tool' | 'nav' | 'footer' | string;
-}
-
-export interface ArticleViewProperties {
-  slug: string;
-  title: string;
-  category?: string;
-}
-
-export interface ArticleToProductClickProperties {
+/**
+ * Event: calculator_cta_click
+ * Fired when a user clicks a CTA leading to the calculator.
+ */
+export interface CalculatorCtaClickParameters {
   source_page: string;
-  cta_location: string;
+  destination: string;
 }
 
-export interface CalculatorUseProperties {
-  split_method?: string;
-  action?: string;
+/**
+ * Event: article_cta_click
+ * Fired for important article CTAs (companion tools, product recommendations, etc.).
+ */
+export interface ArticleCtaClickParameters {
+  article_slug: string;
+  cta_name: string;
+  destination: string;
 }
 
-export interface CalculatorCompleteProperties {
-  split_method?: string;
-  split_ratio?: string;
-  source_page?: string;
+/**
+ * Event: product_view
+ * Fired when a commercial product page is viewed (deduplicated against React re-renders).
+ */
+export interface ProductViewParameters {
+  product_slug: string;
+  product_name: string;
 }
 
-export interface CalculatorToProductClickProperties {
+/**
+ * Event: product_cta_click
+ * Fired when a user clicks a product CTA (e.g. "Buy Couples Money Planner ($19)", "Get Instant Copy").
+ * Note: A CTA click is strictly an intent indicator, NOT a purchase.
+ */
+export interface ProductCtaClickParameters {
+  product_slug: string;
+  cta_name: string;
+  destination: string;
+}
+
+/**
+ * Event: lead_signup
+ * Fired ONLY AFTER a successful email subscription or waitlist signup.
+ * NEVER send the email address or personal contact info.
+ */
+export interface LeadSignupParameters {
   source_page: string;
-  cta_location: string;
+  form_location: string;
 }
 
-export interface TemplateDownloadProperties {
+/**
+ * Event: template_download
+ * Typed interface reserved for when a real downloadable asset/copy link is triggered.
+ */
+export interface TemplateDownloadParameters {
+  template_slug: string;
   template_name: string;
   source_page: string;
   format?: string;
 }
 
-export interface ProductCtaClickProperties {
-  product: string;
+/**
+ * Event: purchase
+ * Typed interface reserved for when a confirmed checkout success webhook or thank-you signal exists.
+ */
+export interface PurchaseParameters {
+  transaction_id: string;
+  product_slug: string;
+  value: number;
+  currency: string;
+}
+
+/**
+ * Event: whatsapp_click
+ * Contextual help button click. Excludes message content.
+ */
+export interface WhatsAppClickParameters {
   source_page: string;
   cta_location: string;
-  cta_text?: string;
-}
-
-export interface OutboundProductClickProperties {
-  product: string;
-  destination_url: string;
-  source_page: string;
-  cta_location: string;
-}
-
-export interface EmailFormViewProperties {
-  source_page: string;
-  content_cluster?: string;
-  cta_location?: string;
-}
-
-export interface EmailSignupProperties {
-  // CRITICAL: Strictly exclude email addresses and PII from analytics payloads
-  source_page: string;
-  content_cluster?: string;
-  cta_location?: string;
-}
-
-export interface WhatsAppClickProperties {
-  // CRITICAL: Strictly exclude message text and sensitive financial numbers from analytics payloads
-  page: string;
-  content_cluster?: string;
-  cta_location?: string;
   topic?: string;
 }
 
-export interface PopupViewProperties {
-  page_url: string;
-  utm_source?: string;
-  utm_campaign?: string;
-  utm_content?: string;
-  device?: string;
-  trigger?: string;
-  variant?: string;
-}
-
-export interface PopupCloseProperties {
-  page_url: string;
-  utm_source?: string;
-  device?: string;
-  time_spent_seconds?: number;
-}
-
-export interface PopupEmailStartedProperties {
-  page_url: string;
-  device?: string;
-}
-
-export interface PopupSubmitProperties {
-  page_url: string;
-  utm_source?: string;
-  utm_campaign?: string;
-  device?: string;
-  variant?: string;
-}
-
-export interface PopupConversionProperties {
-  page_url: string;
-  utm_source?: string;
-  utm_campaign?: string;
-  utm_content?: string;
-  device?: string;
-  lead_magnet: string;
-  variant?: string;
-}
-
-export interface StarterKitOpenedProperties {
-  page_url: string;
-  device?: string;
-  lead_magnet: string;
-}
-
+// Window dataLayer typing
 declare global {
   interface Window {
-    dataLayer?: unknown[];
-    gtag?: (...args: unknown[]) => void;
+    dataLayer?: Record<string, unknown>[];
   }
 }
 
+// ============================================================================
+// Core dataLayer Dispatcher
+// ============================================================================
+
 /**
- * Dispatch a generic custom analytics event
+ * Generic SSR-safe, TypeScript-safe dataLayer push utility.
+ * Pushes standard event objects into window.dataLayer for GTM to trigger GA4 tags.
  */
-export function trackEvent(eventName: string, properties: Record<string, unknown> = {}): void {
-  if (typeof window === 'undefined') return;
-
-  const eventPayload = {
-    event: eventName,
-    timestamp: new Date().toISOString(),
-    ...properties,
-  };
-
-  // Google Tag Manager / GA4 dataLayer support
-  if (Array.isArray(window.dataLayer)) {
-    window.dataLayer.push(eventPayload);
+export function trackEvent(
+  eventName: string,
+  parameters: Record<string, unknown> = {}
+): void {
+  if (typeof window === 'undefined') {
+    return;
   }
 
-  // Google gtag support
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', eventName, properties);
-  }
-
-  // Native DOM custom event for debugging or headless analytics listeners
   try {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      ...parameters,
+    });
+
+    // Native custom event dispatch for browser console debugging or local testing
     window.dispatchEvent(
       new CustomEvent('togetherly_analytics', {
-        detail: { eventName, properties: eventPayload },
+        detail: { event: eventName, parameters },
       })
     );
   } catch {
-    // Ignore in non-browser or restricted environments
+    // Fail silently in restricted sandbox or private browsing environments
   }
 }
 
+// ============================================================================
+// Concrete Business Event Functions
+// ============================================================================
+
 /**
- * Track when a user views a product page
+ * A) calculator_used
+ * Fire when the bill-splitting calculator successfully calculates a result.
  */
-export function trackProductView(properties: ProductViewProperties): void {
-  trackEvent('product_view', properties as unknown as Record<string, unknown>);
+export function trackCalculatorUsed(params: CalculatorUsedParameters): void {
+  trackEvent('calculator_used', {
+    calculator_type: params.calculator_type,
+    page_path: params.page_path,
+    ...(params.split_method ? { split_method: params.split_method } : {}),
+  });
 }
 
 /**
- * Track when a user clicks any checkout CTA
+ * B) calculator_cta_click
+ * Fire when someone clicks a CTA that sends them to the calculator.
  */
-export function trackCheckoutClick(properties: CheckoutClickProperties): void {
-  trackEvent('checkout_click', properties as unknown as Record<string, unknown>);
+export function trackCalculatorCtaClick(params: CalculatorCtaClickParameters): void {
+  trackEvent('calculator_cta_click', {
+    source_page: params.source_page,
+    destination: params.destination,
+  });
 }
 
 /**
- * Track when a user views an educational blog article
+ * C) article_cta_click
+ * Fire for important article CTAs.
  */
-export function trackArticleView(properties: ArticleViewProperties): void {
-  trackEvent('article_view', properties as unknown as Record<string, unknown>);
+export function trackArticleCtaClick(params: ArticleCtaClickParameters): void {
+  trackEvent('article_cta_click', {
+    article_slug: params.article_slug,
+    cta_name: params.cta_name,
+    destination: params.destination,
+  });
 }
 
 /**
- * Track when a user clicks from a blog article to the commercial product page
+ * D) product_view
+ * Fire when an actual product page is viewed. Deduplicated with React refs.
  */
-export function trackArticleToProductClick(properties: ArticleToProductClickProperties): void {
-  trackEvent('article_to_product_click', properties as unknown as Record<string, unknown>);
+export function trackProductView(params: ProductViewParameters): void {
+  trackEvent('product_view', {
+    product_slug: params.product_slug,
+    product_name: params.product_name,
+  });
 }
 
 /**
- * Track when a user interacts with the expense split calculator
+ * E) product_cta_click
+ * Fire when a visitor clicks a product CTA.
  */
-export function trackCalculatorUse(properties: CalculatorUseProperties = {}): void {
-  trackEvent('calculator_use', properties as unknown as Record<string, unknown>);
+export function trackProductCtaClick(params: ProductCtaClickParameters): void {
+  trackEvent('product_cta_click', {
+    product_slug: params.product_slug,
+    cta_name: params.cta_name,
+    destination: params.destination,
+  });
 }
 
 /**
- * Track when a user completes a calculation (after settling on inputs)
+ * F) lead_signup
+ * Fire ONLY AFTER a successful signup. Never send the email address.
  */
-export function trackCalculatorComplete(properties: CalculatorCompleteProperties = {}): void {
-  trackEvent('calculator_complete', properties as unknown as Record<string, unknown>);
+export function trackLeadSignup(params: LeadSignupParameters): void {
+  trackEvent('lead_signup', {
+    source_page: params.source_page,
+    form_location: params.form_location,
+  });
 }
 
 /**
- * Track when a user downloads or opens a template asset
+ * G) template_download
+ * Intentionally deferred until a real downloadable asset/direct link exists.
  */
-export function trackTemplateDownload(properties: TemplateDownloadProperties): void {
-  trackEvent('template_download', properties as unknown as Record<string, unknown>);
+export function trackTemplateDownload(params: TemplateDownloadParameters): void {
+  trackEvent('template_download', {
+    template_slug: params.template_slug,
+    template_name: params.template_name,
+    source_page: params.source_page,
+    ...(params.format ? { format: params.format } : {}),
+  });
 }
 
 /**
- * Track when a user clicks a product CTA (internal funnel navigation)
+ * H) purchase
+ * Intentionally deferred until a real post-checkout success callback exists.
  */
-export function trackProductCtaClick(properties: ProductCtaClickProperties): void {
-  trackEvent('product_cta_click', properties as unknown as Record<string, unknown>);
+export function trackPurchase(params: PurchaseParameters): void {
+  trackEvent('purchase', {
+    transaction_id: params.transaction_id,
+    product_slug: params.product_slug,
+    value: params.value,
+    currency: params.currency,
+  });
 }
 
 /**
- * Track when a user clicks an outbound commercial purchase/checkout link
+ * Contextual WhatsApp click tracking
  */
-export function trackOutboundProductClick(properties: OutboundProductClickProperties): void {
-  trackEvent('outbound_product_click', properties as unknown as Record<string, unknown>);
+export function trackWhatsAppClick(params: {
+  page?: string;
+  source_page?: string;
+  cta_location?: string;
+  topic?: string;
+  content_cluster?: string;
+}): void {
+  trackEvent('whatsapp_click', {
+    source_page: params.source_page || params.page || '',
+    cta_location: params.cta_location || 'unknown',
+    ...(params.topic ? { topic: params.topic } : {}),
+  });
+}
+
+// ============================================================================
+// Backward-Compatibility Helpers & Aliases (Mapped to Safe Architectures)
+// ============================================================================
+
+/**
+ * @deprecated Use trackLeadSignup instead.
+ */
+export function trackEmailSignup(params: {
+  source_page: string;
+  cta_location?: string;
+  content_cluster?: string;
+}): void {
+  trackLeadSignup({
+    source_page: params.source_page,
+    form_location: params.cta_location || 'email_form',
+  });
 }
 
 /**
- * Track when a user clicks from the free calculator to the commercial product page
+ * @deprecated Use trackLeadSignup instead.
  */
-export function trackCalculatorToProductClick(properties: CalculatorToProductClickProperties): void {
-  trackEvent('calculator_to_product_click', properties as unknown as Record<string, unknown>);
+export function trackEmailFormView(params: {
+  source_page: string;
+  cta_location?: string;
+  content_cluster?: string;
+}): void {
+  trackEvent('email_form_view', {
+    source_page: params.source_page,
+    form_location: params.cta_location || 'email_form',
+  });
 }
 
 /**
- * Track when the email subscription form enters view
+ * @deprecated Use trackProductCtaClick instead.
  */
-export function trackEmailFormView(properties: EmailFormViewProperties): void {
-  trackEvent('email_form_view', properties as unknown as Record<string, unknown>);
+export function trackCheckoutClick(params: {
+  product: string;
+  price?: number;
+  currency?: string;
+  cta_location: string;
+}): void {
+  trackProductCtaClick({
+    product_slug: 'couples-money-planner',
+    cta_name: params.cta_location,
+    destination: 'checkout_redirect',
+  });
 }
 
 /**
- * Track successful email subscription (WITHOUT sending user's email address)
+ * @deprecated Use trackCalculatorUsed instead.
  */
-export function trackEmailSignup(properties: EmailSignupProperties): void {
-  trackEvent('email_signup', properties as unknown as Record<string, unknown>);
+export function trackCalculatorUse(params: {
+  split_method?: string;
+  action?: string;
+}): void {
+  trackCalculatorUsed({
+    calculator_type: 'couples_expense_split',
+    page_path: typeof window !== 'undefined' ? window.location.pathname : '/tools/couples-expense-split-calculator',
+    split_method: params.split_method,
+  });
 }
 
 /**
- * Track when a user clicks a contextual WhatsApp help CTA (WITHOUT sending message content)
+ * @deprecated Use trackCalculatorUsed instead.
  */
-export function trackWhatsAppClick(properties: WhatsAppClickProperties): void {
-  trackEvent('whatsapp_click', properties as unknown as Record<string, unknown>);
+export function trackCalculatorComplete(params: {
+  split_method?: string;
+  split_ratio?: string;
+  source_page?: string;
+}): void {
+  trackCalculatorUsed({
+    calculator_type: 'couples_expense_split',
+    page_path: params.source_page || (typeof window !== 'undefined' ? window.location.pathname : ''),
+    split_method: params.split_method,
+  });
 }
 
 /**
- * Track when the email capture popup enters view
+ * Article view tracker helper
  */
-export function trackPopupView(properties: PopupViewProperties): void {
-  trackEvent('popup_view', properties as unknown as Record<string, unknown>);
+export function trackArticleView(params: {
+  slug: string;
+  title: string;
+  category?: string;
+}): void {
+  trackEvent('article_view', {
+    article_slug: params.slug,
+    article_title: params.title,
+    ...(params.category ? { category: params.category } : {}),
+  });
 }
 
 /**
- * Track when the email capture popup is closed/dismissed
+ * Article to product link tracker
  */
-export function trackPopupClose(properties: PopupCloseProperties): void {
-  trackEvent('popup_close', properties as unknown as Record<string, unknown>);
+export function trackArticleToProductClick(params: {
+  source_page: string;
+  cta_location: string;
+}): void {
+  trackArticleCtaClick({
+    article_slug: params.source_page.replace('/blog/', ''),
+    cta_name: params.cta_location,
+    destination: '/products/couples-money-planner',
+  });
+  trackProductCtaClick({
+    product_slug: 'couples-money-planner',
+    cta_name: params.cta_location,
+    destination: '/products/couples-money-planner',
+  });
 }
 
 /**
- * Track when the visitor starts typing in the popup email field
+ * Calculator to product link tracker
  */
-export function trackPopupEmailStarted(properties: PopupEmailStartedProperties): void {
-  trackEvent('popup_email_started', properties as unknown as Record<string, unknown>);
+export function trackCalculatorToProductClick(params: {
+  source_page: string;
+  cta_location: string;
+}): void {
+  trackProductCtaClick({
+    product_slug: 'couples-money-planner',
+    cta_name: params.cta_location,
+    destination: '/products/couples-money-planner',
+  });
 }
 
 /**
- * Track when the popup form is submitted
+ * Popup analytics
  */
-export function trackPopupSubmit(properties: PopupSubmitProperties): void {
-  trackEvent('popup_submit', properties as unknown as Record<string, unknown>);
+export function trackPopupView(params: Record<string, unknown>): void {
+  trackEvent('popup_view', params);
 }
 
-/**
- * Track when the popup form successfully converts
- */
-export function trackPopupConversion(properties: PopupConversionProperties): void {
-  trackEvent('popup_conversion', properties as unknown as Record<string, unknown>);
+export function trackPopupClose(params: Record<string, unknown>): void {
+  trackEvent('popup_close', params);
 }
 
-/**
- * Track when the user opens the starter kit from the success state
- */
-export function trackStarterKitOpened(properties: StarterKitOpenedProperties): void {
-  trackEvent('starter_kit_opened', properties as unknown as Record<string, unknown>);
+export function trackPopupEmailStarted(params: Record<string, unknown>): void {
+  trackEvent('popup_email_started', params);
 }
 
+export function trackPopupSubmit(params: Record<string, unknown>): void {
+  trackEvent('popup_submit', params);
+}
 
+export function trackPopupConversion(params: Record<string, unknown>): void {
+  trackEvent('popup_conversion', params);
+  // Also fire lead_signup
+  trackLeadSignup({
+    source_page: typeof window !== 'undefined' ? window.location.pathname : '',
+    form_location: 'lead_magnet_popup',
+  });
+}
+
+export function trackStarterKitOpened(params: Record<string, unknown>): void {
+  trackEvent('starter_kit_opened', params);
+}

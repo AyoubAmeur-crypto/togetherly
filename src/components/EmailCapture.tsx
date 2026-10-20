@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Mail, CheckCircle2, AlertCircle, Loader2, Send } from 'lucide-react';
-import { trackEmailFormView, trackEmailSignup } from '@/lib/analytics';
+import { trackLeadSignup } from '@/lib/analytics';
 
 export interface EmailCaptureProps {
   sourcePage?: string;
@@ -26,18 +26,6 @@ export default function EmailCapture({
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const hasTrackedView = useRef(false);
-
-  useEffect(() => {
-    if (!hasTrackedView.current && typeof window !== 'undefined') {
-      hasTrackedView.current = true;
-      trackEmailFormView({
-        source_page: sourcePage || window.location.pathname,
-        content_cluster: contentCluster,
-        cta_location: ctaLocation,
-      });
-    }
-  }, [sourcePage, contentCluster, ctaLocation]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,10 +81,9 @@ export default function EmailCapture({
 
       setStatus('success');
       // Fire analytics without PII
-      trackEmailSignup({
+      trackLeadSignup({
         source_page: effectiveSource,
-        content_cluster: contentCluster,
-        cta_location: ctaLocation,
+        form_location: ctaLocation,
       });
     } catch {
       setStatus('error');

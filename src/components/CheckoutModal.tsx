@@ -3,6 +3,7 @@
 import React from 'react';
 import { X, ShoppingBag, ArrowRight } from 'lucide-react';
 import { couplesMoneyPlanner, TOGETHERLY_GOOGLE_SHEET_COPY_URL } from '../config/productConfig';
+import { trackProductCtaClick } from '../lib/analytics';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -62,6 +63,13 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               href={TOGETHERLY_GOOGLE_SHEET_COPY_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackProductCtaClick({
+                  product_slug: 'couples-money-planner',
+                  cta_name: 'checkout_modal_copy_button',
+                  destination: TOGETHERLY_GOOGLE_SHEET_COPY_URL,
+                })
+              }
               className="inline-flex items-center justify-center gap-2 w-full bg-[#174F4A] text-[#FAF6EF] py-3.5 px-6 rounded-none font-bold hover:bg-[#0F3834] transition-colors"
             >
               <span>Instant 1-Click Google Sheets Copy</span>

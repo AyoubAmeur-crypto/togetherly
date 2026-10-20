@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import EmailCapture from '@/components/EmailCapture';
 import TrackedProductLink from '@/components/TrackedProductLink';
+import TrackedCalculatorLink from '@/components/TrackedCalculatorLink';
 import WhatsAppHelpCTA from '@/components/WhatsAppHelpCTA';
 import { absoluteUrl } from '@/config/site';
 import { getBreadcrumbListSchema } from '@/lib/schema';
@@ -337,13 +338,15 @@ export default function CouplesBudgetTemplatePage() {
             Explore More Couples Finance Resources
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <Link
+            <TrackedCalculatorLink
               href="/tools/couples-expense-split-calculator"
+              sourcePage="/templates/couples-budget-template"
+              ctaName="template_resource_cluster"
               className="p-3 bg-white border border-[#174F4A]/10 hover:border-[#2C7A73] transition-colors font-medium text-[#174F4A] flex items-center justify-between"
             >
               <span>Split Bills Based on Income Calculator</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#2C7A73]" />
-            </Link>
+            </TrackedCalculatorLink>
             <Link
               href="/blog/split-bills-based-on-income"
               className="p-3 bg-white border border-[#174F4A]/10 hover:border-[#2C7A73] transition-colors font-medium text-[#174F4A] flex items-center justify-between"
