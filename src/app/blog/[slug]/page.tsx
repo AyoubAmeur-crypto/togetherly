@@ -7,6 +7,7 @@ import ArticleTracker from '@/components/ArticleTracker';
 import WhatsAppHelpCTA from '@/components/WhatsAppHelpCTA';
 import EmailCapture from '@/components/EmailCapture';
 import TrackedProductLink from '@/components/TrackedProductLink';
+import TrackedCalculatorLink from '@/components/TrackedCalculatorLink';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -212,13 +213,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 'Curious what proportional splitting looks like with your actual salaries? Use our free, no-login Couples Expense Split Calculator.'}
             </p>
             <div className="pt-1">
-              <Link
+              <TrackedCalculatorLink
                 href={toolCta.url || '/tools/couples-expense-split-calculator'}
+                sourcePage={`/blog/${post.slug}`}
+                ctaName="companion_tool_box"
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-[#174F4A] hover:text-[#2C7A73] transition-colors"
               >
                 <span>{toolCta.buttonText || 'Open Expense Split Calculator'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              </TrackedCalculatorLink>
             </div>
           </div>
         )}

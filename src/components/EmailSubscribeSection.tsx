@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Mail, AlertCircle, Loader2, Send, ShieldCheck, Check } from 'lucide-react';
-import { trackEmailSignup } from '@/lib/analytics';
+import { trackLeadSignup } from '@/lib/analytics';
 
 interface EmailSubscribeSectionProps {
   sourcePage?: string;
@@ -76,10 +76,9 @@ export default function EmailSubscribeSection({
 
       setStatus('success');
 
-      trackEmailSignup({
+      trackLeadSignup({
         source_page: effectiveSource,
-        content_cluster: contentCluster,
-        cta_location: ctaLocation,
+        form_location: ctaLocation,
       });
     } catch {
       setStatus('error');

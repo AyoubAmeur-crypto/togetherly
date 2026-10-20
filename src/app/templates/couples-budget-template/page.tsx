@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
-  FileSpreadsheet,
   ArrowRight,
-  Sparkles,
   HelpCircle,
   Calculator,
   Users,
@@ -13,6 +11,7 @@ import {
 } from 'lucide-react';
 import EmailCapture from '@/components/EmailCapture';
 import TrackedProductLink from '@/components/TrackedProductLink';
+import TrackedCalculatorLink from '@/components/TrackedCalculatorLink';
 import WhatsAppHelpCTA from '@/components/WhatsAppHelpCTA';
 import { absoluteUrl } from '@/config/site';
 import { getBreadcrumbListSchema } from '@/lib/schema';
@@ -116,7 +115,7 @@ export default function CouplesBudgetTemplatePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumbs" className="mb-8">
           <ol className="flex items-center space-x-2 text-xs text-[#6F7F7C]">
@@ -135,11 +134,8 @@ export default function CouplesBudgetTemplatePage() {
         </nav>
 
         {/* Hero Section */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#2C7A73]/10 text-[#2C7A73] text-xs font-bold uppercase tracking-wider mb-4 border border-[#2C7A73]/20">
-            <FileSpreadsheet className="w-3.5 h-3.5" />
-            Free Spreadsheet Resource
-          </div>
+        <div className="text-center max-w-4xl mx-auto mb-12">
+          
           <h1 className="text-3xl sm:text-5xl font-black text-[#174F4A] tracking-tight leading-tight mb-4">
             Couples Budget Template
             <span className="block text-xl sm:text-2xl font-normal text-[#4A5D59] mt-2">
@@ -152,18 +148,15 @@ export default function CouplesBudgetTemplatePage() {
         </div>
 
         {/* Lead Capture Box */}
-        <div className="mb-14 p-6 sm:p-8 bg-[#FFFFFF] border-2 border-[#174F4A]/20 shadow-sm">
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="w-5 h-5 text-[#2C7A73]" />
-            <h2 className="text-xl font-bold text-[#174F4A]">
-              Get the Free Couples Budget Starter Sheet
-            </h2>
-          </div>
+        <div className="mb-14 p-6 sm:p-8 bg-[#FFFFFF] ">
+          <h2 className="text-xl font-bold text-[#174F4A] mb-3">
+            Get the Free Couples Budget Starter Sheet
+          </h2>
           <p className="text-sm text-[#4A5D59] mb-4 leading-relaxed">
             We are finalizing the public release of our free 2-person Google Sheets template. Enter your email below to receive instant early access as soon as the copy link goes live, along with our weekly couples finance frameworks.
           </p>
 
-          <div className="mb-5 p-3.5 bg-[#FAF6EF] border border-[#174F4A]/10 text-xs text-[#6F7F7C]">
+          <div className="mb-5 p-3.5 bg-[#FAF6EF] text-xs text-[#6F7F7C]">
             <strong>Transparent note:</strong> We never fake downloads. This starter asset is currently in final QA testing. Signing up adds you directly to the delivery queue to receive the free copy link in your inbox.
           </div>
 
@@ -230,7 +223,7 @@ export default function CouplesBudgetTemplatePage() {
         </div>
 
         {/* Free Starter vs Paid Planner Comparison */}
-        <div className="mb-14 p-6 sm:p-8 bg-[#FFFFFF] border-2 border-[#174F4A]/20">
+        <div className="mb-14 p-6 sm:p-8 bg-[#FFFFFF] ">
           <div className="mb-6">
             <span className="text-xs font-bold uppercase tracking-wider text-[#2C7A73]">Upgrade Option</span>
             <h2 className="text-2xl font-bold text-[#174F4A] mt-1">
@@ -295,7 +288,7 @@ export default function CouplesBudgetTemplatePage() {
               sourceType="template"
               sourcePage="/templates/couples-budget-template"
               ctaLocation="template_comparison"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#2C7A73] hover:bg-[#174F4A] text-white text-xs font-bold transition-colors whitespace-nowrap shadow-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#2C7A73] hover:bg-[#174F4A] text-white text-xs font-bold transition-colors whitespace-nowrap"
             >
               Get Couples Money Planner ($19)
               <ArrowRight className="w-3.5 h-3.5" />
@@ -345,13 +338,15 @@ export default function CouplesBudgetTemplatePage() {
             Explore More Couples Finance Resources
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <Link
+            <TrackedCalculatorLink
               href="/tools/couples-expense-split-calculator"
+              sourcePage="/templates/couples-budget-template"
+              ctaName="template_resource_cluster"
               className="p-3 bg-white border border-[#174F4A]/10 hover:border-[#2C7A73] transition-colors font-medium text-[#174F4A] flex items-center justify-between"
             >
               <span>Split Bills Based on Income Calculator</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#2C7A73]" />
-            </Link>
+            </TrackedCalculatorLink>
             <Link
               href="/blog/split-bills-based-on-income"
               className="p-3 bg-white border border-[#174F4A]/10 hover:border-[#2C7A73] transition-colors font-medium text-[#174F4A] flex items-center justify-between"
@@ -441,6 +436,8 @@ export default function CouplesBudgetTemplatePage() {
             subtext="Ask Togetherly — we are happy to guide you through formulas or account setups."
             message="Hi Togetherly! I have a question about setting up a couples budget spreadsheet for our household."
             buttonText="Ask on WhatsApp"
+            rounded={false}
+            className="shadow-none"
           />
         </div>
       </div>

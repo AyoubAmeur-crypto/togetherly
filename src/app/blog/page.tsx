@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, BookOpen, Clock, Calendar, Calculator, CheckCircle2 } from 'lucide-react';
 import { getAllPosts, upcomingBlogTopics } from '@/content/blog';
 import EmailCapture from '@/components/EmailCapture';
+import TrackedCalculatorLink from '@/components/TrackedCalculatorLink';
 
 
 import { absoluteUrl } from '@/config/site';
@@ -73,13 +74,15 @@ export default function BlogIndexPage() {
             </p>
           </div>
 
-          <Link
+          <TrackedCalculatorLink
             href="/tools/couples-expense-split-calculator"
+            sourcePage="/blog"
+            ctaName="blog_directory_banner"
             className="inline-flex items-center gap-2 bg-[#174F4A] hover:bg-[#0F3834] text-[#FAF6EF] text-sm font-bold px-6 py-3.5 rounded-none transition-colors shrink-0 cursor-pointer"
           >
             <span>Open Free Calculator</span>
             <ArrowRight className="w-4 h-4 text-[#F29B7F]" />
-          </Link>
+          </TrackedCalculatorLink>
         </div>
 
         {/* Published Articles Grid (3 per row on desktop) */}

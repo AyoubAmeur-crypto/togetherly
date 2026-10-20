@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Sparkles, X, Mail, ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
-import { trackEmailSignup } from '@/lib/analytics';
+import { trackLeadSignup } from '@/lib/analytics';
 
 interface EmailTopBannerProps {
   onVisibilityChange?: (visible: boolean) => void;
@@ -121,10 +121,9 @@ export default function EmailTopBanner({ onVisibilityChange }: EmailTopBannerPro
         sessionStorage.setItem('togetherly_banner_dismissed_product', 'true');
       }
 
-      trackEmailSignup({
+      trackLeadSignup({
         source_page: sourcePage,
-        content_cluster: contentCluster,
-        cta_location: ctaLocation,
+        form_location: ctaLocation,
       });
 
       // Automatically hide banner after a brief confirmation delay

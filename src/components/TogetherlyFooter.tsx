@@ -13,15 +13,15 @@ import {
   BookOpen,
 } from 'lucide-react';
 import { togetherlyBrand, TOGETHERLY_CHECKOUT_URL } from '../config/productConfig';
-import { trackCheckoutClick } from '../lib/analytics';
+import { trackProductCtaClick } from '../lib/analytics';
+import TrackedCalculatorLink from './TrackedCalculatorLink';
 
 export default function TogetherlyFooter() {
   const handleCheckoutClick = () => {
-    trackCheckoutClick({
-      product: 'Togetherly Couples Money Planner',
-      price: 19,
-      currency: 'USD',
-      cta_location: 'footer_bottom_bar',
+    trackProductCtaClick({
+      product_slug: 'couples-money-planner',
+      cta_name: 'footer_bottom_bar',
+      destination: TOGETHERLY_CHECKOUT_URL,
     });
   };
 
@@ -93,13 +93,15 @@ export default function TogetherlyFooter() {
                   </Link>
                 </li>
                 <li>
-                  <Link
+                  <TrackedCalculatorLink
                     href="/tools/couples-expense-split-calculator"
+                    sourcePage="footer"
+                    ctaName="footer_tools_link"
                     className="hover:text-[#174F4A] transition-colors inline-flex items-center gap-1.5 text-[#174F4A] font-medium py-1"
                   >
                     <span>Expense Split Calculator</span>
                     <Calculator className="w-3 h-3 text-[#2C7A73]" />
-                  </Link>
+                  </TrackedCalculatorLink>
                 </li>
                 <li>
                   <Link

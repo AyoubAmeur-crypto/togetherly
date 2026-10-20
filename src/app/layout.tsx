@@ -3,7 +3,7 @@ import { Plus_Jakarta_Sans, Manrope } from 'next/font/google';
 import './globals.css';
 import TogetherlyNav from '@/components/TogetherlyNav';
 import TogetherlyFooter from '@/components/TogetherlyFooter';
-import GoogleAnalytics from '@/components/GoogleAnalytics';
+import GoogleTagManager from '@/components/GoogleTagManager';
 import { SITE_URL, SITE_DEFAULTS } from '@/config/site';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -72,7 +72,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/togetherly/togetherly-icon.png" />
       </head>
       <body className={`${plusJakartaSans.className} min-h-full flex flex-col bg-[#FAF6EF] text-[#243B38] antialiased selection:bg-[#F29B7F]/30 selection:text-[#174F4A]`}>
-        <GoogleAnalytics />
+        <GoogleTagManager />
         <TogetherlyNav />
         <div className="flex-1">{children}</div>
         <TogetherlyFooter />
